@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TotalBrokerage — Easy Compliance. Accurate Commissions.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:#070E18;color:#EDF3F8;font-family:'Outfit',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}
+
+:root{
+  --bg:#070E18;--surface:#0C1825;
+  --teal:#1B4D68;--teal-l:#2B7BAE;--teal-b:#3A9AD4;
+  --orange:#F5751C;--og:rgba(245,117,28,0.11);
+  --white:#EDF3F8;--muted:#607D92;
+  --bd:rgba(255,255,255,0.07);--bd2:rgba(255,255,255,0.04);
+}
+
+/* ── AURORA BG ── */
+.aurora{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.ab{position:absolute;border-radius:50%;filter:blur(90px)}
+.ab1{width:800px;height:800px;top:-250px;left:-180px;
+  background:radial-gradient(circle,rgba(27,77,104,0.85) 0%,transparent 65%);
+  animation:adrift 17s ease-in-out infinite alternate}
+.ab2{width:600px;height:600px;top:8%;right:-140px;
+  background:radial-gradient(circle,rgba(245,117,28,0.4) 0%,transparent 65%);
+  filter:blur(110px);animation:adrift 13s ease-in-out infinite alternate-reverse}
+.ab3{width:650px;height:650px;bottom:-180px;left:32%;
+  background:radial-gradient(circle,rgba(43,123,174,0.5) 0%,transparent 65%);
+  animation:adrift 21s ease-in-out infinite alternate}
+@keyframes adrift{0%{transform:translate(0,0) scale(1)}100%{transform:translate(55px,45px) scale(1.07)}}
+.a-noise{position:absolute;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity:0.5}
+
+.page{position:relative;z-index:1}
+
+/* ── REVEAL ── */
+[data-r]{opacity:0;transform:translateY(20px);
+  transition:opacity 0.75s cubic-bezier(0.16,1,0.3,1),transform 0.75s cubic-bezier(0.16,1,0.3,1)}
+[data-r].on{opacity:1;transform:translateY(0)}
+[data-r][data-d="1"]{transition-delay:0.09s}
+[data-r][data-d="2"]{transition-delay:0.18s}
+[data-r][data-d="3"]{transition-delay:0.27s}
+[data-r][data-d="4"]{transition-delay:0.36s}
+
+/* ── NAV ── */
+nav{height:70px;padding:0 60px;display:flex;align-items:center;
+  justify-content:space-between;position:sticky;top:0;z-index:100;
+  background:rgba(7,14,24,0.78);backdrop-filter:blur(22px);
+  border-bottom:1px solid var(--bd)}
+.nav-logo{font-size:18px;font-weight:700;letter-spacing:-0.01em;color:var(--white)}
+.nav-logo span{color:var(--orange)}
+.nav-links{display:flex;gap:34px}
+.nav-links a{font-size:13px;font-weight:400;color:rgba(237,243,248,0.38);transition:color 0.2s}
+.nav-links a:hover{color:rgba(237,243,248,0.82)}
+.nav-r{display:flex;gap:12px;align-items:center}
+.nav-login{font-size:13px;font-weight:400;color:rgba(237,243,248,0.38);transition:color 0.2s}
+.nav-login:hover{color:var(--white)}
+.nav-cta{padding:9px 22px;background:var(--orange);color:#fff;border-radius:100px;
+  font-size:14px;font-weight:600;transition:all 0.2s;box-shadow:0 0 22px rgba(245,117,28,0.2)}
+.nav-cta:hover{transform:translateY(-1px);box-shadow:0 0 36px rgba(245,117,28,0.3)}
+
+/* ── HERO — centered, V3 style ── */
+.hero{min-height:calc(100vh - 70px);display:grid;
+  grid-template-columns:1fr 1fr;gap:52px;align-items:center;
+  padding:72px 60px;text-align:left}
+.hero-left{}
+.hero-right{display:flex;align-items:center;justify-content:center}
+
+.hero-pill{display:inline-flex;align-items:center;gap:7px;padding:5px 15px;
+  background:var(--og);border:1px solid rgba(245,117,28,0.18);border-radius:100px;
+  font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--orange);margin-bottom:36px}
+.pill-dot{width:5px;height:5px;border-radius:50%;background:var(--orange);
+  box-shadow:0 0 6px var(--orange);animation:pdot 2s ease-in-out infinite}
+@keyframes pdot{0%,100%{opacity:1}50%{opacity:0.35}}
+
+/* Hero headline — V2 copy, V3 gradient treatment */
+.hero-h1{font-size:clamp(44px,6.5vw,88px);font-weight:800;
+  letter-spacing:-0.035em;line-height:0.9;max-width:700px;margin-bottom:24px}
+.h1-top{display:block;color:var(--white)}
+.h1-bot{display:block;
+  background:linear-gradient(120deg,var(--teal-b) 0%,var(--orange) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* Sub-hero — V1 copy */
+.hero-sub{font-size:clamp(15px,1.8vw,18px);font-weight:400;
+  color:rgba(237,243,248,0.42);max-width:560px;line-height:1.72;margin-bottom:40px}
+.hero-sub strong{color:rgba(237,243,248,0.7);font-weight:600}
+
+.hero-btns{display:flex;gap:12px;align-items:center;margin-bottom:52px}
+.btn-p{padding:14px 34px;background:var(--orange);color:#fff;border-radius:100px;
+  font-size:16px;font-weight:700;transition:all 0.22s;
+  display:inline-flex;align-items:center;gap:8px;
+  box-shadow:0 0 38px rgba(245,117,28,0.22)}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 0 54px rgba(245,117,28,0.32)}
+.btn-s{padding:13px 28px;border:1px solid rgba(255,255,255,0.1);
+  color:rgba(237,243,248,0.42);border-radius:100px;font-size:16px;
+  font-weight:400;transition:all 0.2s}
+.btn-s:hover{border-color:rgba(255,255,255,0.22);color:var(--white)}
+
+/* Client logos */
+.hero-logos{display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:flex-start}
+.logos-lbl{font-size:11px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;
+  color:rgba(237,243,248,0.18)}
+.logo-n{font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
+  color:rgba(237,243,248,0.16);transition:color 0.2s}
+.logo-n:hover{color:rgba(237,243,248,0.38)}
+.logo-sep{width:1px;height:14px;background:rgba(255,255,255,0.08)}
+
+/* ── PROBLEM SECTION ── */
+.problem{padding:100px 60px;max-width:1200px;margin:0 auto}
+
+.prob-h{font-size:clamp(36px,5.5vw,68px);font-weight:800;
+  letter-spacing:-0.03em;line-height:0.96;color:var(--white);
+  margin-bottom:56px;max-width:680px}
+.prob-h em{font-style:normal;color:var(--orange)}
+
+/* Simple tiles — clean 3-col */
+.grad-text{font-style:normal;
+  background:linear-gradient(110deg,var(--orange) 0%,#FFAA55 60%,var(--teal-b) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* ── STRONGER AURORA ── */
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.tile{background:rgba(255,255,255,0.02);border:1px solid var(--bd);
+  border-radius:14px;padding:28px 24px;transition:all 0.25s;position:relative;overflow:hidden}
+.tile::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--orange),transparent);
+  transform:scaleX(0);transition:transform 0.32s}
+.tile:hover{background:rgba(245,117,28,0.03);border-color:rgba(245,117,28,0.14)}
+.tile:hover::after{transform:scaleX(1)}
+.tile-n{font-size:11px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;
+  color:rgba(245,117,28,0.5);margin-bottom:12px}
+.tile h3{font-size:18px;font-weight:700;color:var(--white);
+  letter-spacing:-0.01em;line-height:1.15;margin-bottom:8px}
+.tile p{font-size:13px;font-weight:400;color:rgba(237,243,248,0.38);line-height:1.72}
+.tile p strong{color:rgba(237,243,248,0.6);font-weight:600}
+
+/* ── WHY FAILS ── */
+.fails{padding:0 60px 96px;max-width:1200px;margin:0 auto}
+.fails-box{background:rgba(27,77,104,0.07);border:1px solid rgba(43,123,174,0.12);
+  border-radius:14px;padding:52px}
+.fails-h{font-size:clamp(22px,3vw,36px);font-weight:700;letter-spacing:-0.02em;
+  line-height:1.1;color:var(--white);margin-bottom:14px}
+.fails-body{font-size:15px;font-weight:400;color:rgba(237,243,248,0.4);
+  line-height:1.82;max-width:680px;margin-bottom:28px}
+.fails-body strong{color:rgba(237,243,248,0.62);font-weight:600}
+.tried{display:flex;flex-wrap:wrap;gap:8px}
+.tried-item{padding:6px 14px;border:1px solid var(--bd);border-radius:4px;font-size:12px;
+  color:rgba(237,243,248,0.26);display:flex;align-items:center;gap:7px}
+.tried-item::before{content:'✕';font-size:9px;color:rgba(237,243,248,0.14)}
+
+/* ── BEFORE / AFTER ── */
+.ba{padding:0 60px 96px;max-width:1200px;margin:0 auto}
+.ba-h{font-size:clamp(26px,3.5vw,44px);font-weight:700;letter-spacing:-0.025em;
+  line-height:1.05;color:var(--white);margin-bottom:28px}
+.ba-table{border:1px solid var(--bd);border-radius:12px;overflow:hidden}
+.ba-heads{display:grid;grid-template-columns:1fr 1fr;background:rgba(255,255,255,0.02)}
+.ba-hd{padding:14px 24px;font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase}
+.ba-hd.b{color:rgba(237,243,248,0.2);border-right:1px solid var(--bd)}
+.ba-hd.a{color:var(--orange)}
+.ba-row{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--bd)}
+.ba-c{padding:18px 24px;font-size:14px;font-weight:400;line-height:1.72}
+.ba-c.b{color:rgba(237,243,248,0.28);border-right:1px solid var(--bd)}
+.ba-c.a{color:rgba(237,243,248,0.65)}
+.ba-c.a strong{color:var(--white);font-weight:600}
+
+/* ── PLATFORM ── */
+.platform{padding:96px 60px;max-width:1200px;margin:0 auto;border-top:1px solid var(--bd)}
+.plat-tag{font-size:11px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--orange);margin-bottom:14px}
+.plat-h{font-size:clamp(28px,4vw,48px);font-weight:700;letter-spacing:-0.025em;
+  line-height:1.05;color:var(--white);margin-bottom:44px}
+.modules{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  background:var(--bd);border:1px solid var(--bd);border-radius:12px;overflow:hidden}
+.mod{background:var(--bg);padding:30px 26px;transition:background 0.2s}
+.mod:hover{background:var(--surface)}
+.mod-icon{width:34px;height:34px;background:var(--og);border:1px solid rgba(245,117,28,0.14);
+  border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.mod-icon svg{width:15px;height:15px;stroke:var(--orange);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.mod h4{font-size:15px;font-weight:700;color:var(--white);margin-bottom:7px;letter-spacing:-0.01em}
+.mod p{font-size:13px;font-weight:400;color:rgba(237,243,248,0.36);line-height:1.72}
+
+/* ── SERHANT ── */
+.serhant{padding:0 60px;border-top:1px solid var(--bd)}
+.s-inner{max-width:1200px;margin:0 auto;padding:96px 0;
+  display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.s-setup{font-size:12px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;
+  color:rgba(237,243,248,0.22);margin-bottom:22px}
+.s-q{font-size:clamp(17px,2.3vw,23px);font-weight:300;font-style:italic;
+  color:rgba(237,243,248,0.52);line-height:1.62;margin-bottom:28px}
+.s-q strong{color:var(--white);font-style:normal;font-weight:500}
+.s-attr{display:flex;align-items:center;gap:12px}
+.s-av{width:40px;height:40px;border-radius:50%;background:var(--og);
+  border:1px solid rgba(245,117,28,0.25);display:flex;align-items:center;
+  justify-content:center;font-size:12px;font-weight:700;color:var(--orange)}
+.s-name{font-size:14px;font-weight:600;color:var(--white)}
+.s-role{font-size:12px;color:var(--muted)}
+.s-cards{display:flex;flex-direction:column;gap:10px}
+.s-card{background:rgba(255,255,255,0.02);border:1px solid var(--bd);
+  border-radius:10px;padding:22px 24px}
+.s-card-q{font-size:14px;font-weight:300;font-style:italic;
+  color:rgba(237,243,248,0.42);line-height:1.72;margin-bottom:10px}
+.s-card-q strong{color:rgba(237,243,248,0.62);font-style:normal;font-weight:500}
+.s-card-attr{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;
+  color:rgba(237,243,248,0.25)}
+.s-card-attr span{color:var(--orange)}
+
+/* Awards */
+.awards{padding:0 60px;border-top:1px solid var(--bd)}
+.aw-inner{max-width:1200px;margin:0 auto;padding:48px 0}
+.aw-lbl{font-size:11px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;
+  color:rgba(237,243,248,0.18);margin-bottom:20px}
+.aw-row{display:flex;flex-wrap:wrap;gap:8px}
+.aw{padding:6px 15px;background:rgba(255,255,255,0.02);border:1px solid var(--bd);
+  border-radius:100px;font-size:12px;color:rgba(237,243,248,0.28);
+  display:flex;align-items:center;gap:6px;transition:all 0.2s}
+.aw:hover{border-color:rgba(245,117,28,0.2);color:rgba(237,243,248,0.6)}
+.aw-star{color:var(--orange);font-size:9px}
+
+/* ── CLOSE ── */
+.close{padding:100px 60px;text-align:center;border-top:1px solid var(--bd)}
+.close-h{font-size:clamp(34px,6vw,82px);font-weight:800;letter-spacing:-0.03em;
+  line-height:0.91;color:var(--white);margin-bottom:18px}
+.close-h em{font-style:normal;
+  background:linear-gradient(120deg,var(--teal-b),var(--orange));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.close-sub{font-size:17px;font-weight:400;color:rgba(237,243,248,0.38);
+  max-width:460px;margin:0 auto 42px;line-height:1.72}
+.close-sub strong{color:rgba(237,243,248,0.62);font-weight:600}
+.close-btns{display:flex;gap:12px;justify-content:center;align-items:center}
+.btn-o{padding:13px 30px;border:1px solid rgba(255,255,255,0.12);
+  color:rgba(237,243,248,0.42);border-radius:100px;font-size:15px;
+  font-weight:400;transition:all 0.2s}
+.btn-o:hover{border-color:rgba(255,255,255,0.22);color:var(--white)}
+
+/* ── FOOTER ── */
+footer{border-top:1px solid var(--bd);padding:56px 60px 40px}
+.ft{max-width:1200px;margin:0 auto}
+.ft-top{display:grid;grid-template-columns:1.5fr repeat(4,1fr);gap:48px;margin-bottom:48px}
+.ft-desc{font-size:13px;font-weight:300;color:rgba(237,243,248,0.26);
+  line-height:1.75;margin-top:10px;max-width:210px}
+.ft-col-h{font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;
+  color:rgba(237,243,248,0.18);margin-bottom:16px}
+.ft-links{list-style:none;display:flex;flex-direction:column;gap:9px}
+.ft-links a{font-size:13px;font-weight:300;color:rgba(237,243,248,0.32);transition:color 0.2s}
+.ft-links a:hover{color:rgba(237,243,248,0.7)}
+.ft-bot{display:flex;justify-content:space-between;align-items:center;
+  padding-top:24px;border-top:1px solid var(--bd2)}
+.ft-copy{font-size:12px;color:rgba(237,243,248,0.16)}
+.ft-legal{display:flex;gap:18px}
+.ft-legal a{font-size:12px;color:rgba(237,243,248,0.16);transition:color 0.2s}
+.ft-legal a:hover{color:rgba(237,243,248,0.4)}
+
+
+/* ── HOW IT WORKS ── */
+.hiw{padding:96px 60px;max-width:1200px;margin:0 auto;border-top:1px solid var(--bd)}
+.hiw-tag{font-size:11px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--orange);margin-bottom:14px}
+.hiw-h{font-size:clamp(28px,4vw,48px);font-weight:700;letter-spacing:-0.025em;
+  line-height:1.05;color:var(--white);margin-bottom:56px}
+.hiw-steps{display:flex;flex-direction:column;gap:0;position:relative}
+.hiw-steps::before{content:'';position:absolute;left:19px;top:28px;bottom:28px;
+  width:1px;background:linear-gradient(to bottom,var(--orange),rgba(245,117,28,0.08));
+  z-index:0}
+.hiw-step{display:grid;grid-template-columns:40px 1fr;gap:28px;align-items:start;
+  padding:28px 0;border-bottom:1px solid var(--bd2);position:relative;z-index:1}
+.hiw-step:last-child{border-bottom:none}
+.hiw-num{width:40px;height:40px;border-radius:50%;background:var(--bg);
+  border:1px solid rgba(245,117,28,0.3);display:flex;align-items:center;
+  justify-content:center;font-size:13px;font-weight:700;color:var(--orange);
+  flex-shrink:0;box-shadow:0 0 16px rgba(245,117,28,0.1)}
+.hiw-content{}
+.hiw-content h3{font-size:18px;font-weight:700;color:var(--white);
+  letter-spacing:-0.01em;margin-bottom:6px;line-height:1.2}
+.hiw-content p{font-size:14px;font-weight:400;color:rgba(237,243,248,0.4);line-height:1.78}
+.hiw-content p strong{color:rgba(237,243,248,0.65);font-weight:600}
+.hiw-tag-inline{display:inline-block;padding:2px 9px;background:var(--og);
+  border:1px solid rgba(245,117,28,0.15);border-radius:4px;font-size:10px;
+  font-weight:600;letter-spacing:0.1em;text-transform:uppercase;
+  color:rgba(245,117,28,0.7);margin-bottom:8px}
+
+
+/* ══ MOCK SCREENS ══ */
+.mock-wrap{width:100%;max-width:480px;perspective:1200px}
+.mock-screen{background:#0A1520;border:1px solid rgba(43,123,174,0.22);
+  border-radius:12px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,0.55),
+  0 0 0 1px rgba(255,255,255,0.04);
+  transform:rotateY(-6deg) rotateX(3deg);
+  transition:transform 0.5s cubic-bezier(0.16,1,0.3,1)}
+.mock-wrap:hover .mock-screen{transform:rotateY(0deg) rotateX(0deg)}
+.mock-titlebar{height:36px;background:rgba(27,77,104,0.18);
+  border-bottom:1px solid rgba(43,123,174,0.12);
+  display:flex;align-items:center;padding:0 14px;gap:6px}
+.mock-dot{width:9px;height:9px;border-radius:50%}
+.mock-dot-r{background:rgba(248,113,113,0.5)}
+.mock-dot-y{background:rgba(251,191,36,0.5)}
+.mock-dot-g{background:rgba(52,211,153,0.5)}
+.mock-title{font-size:11px;color:rgba(237,243,248,0.22);margin-left:8px;letter-spacing:0.06em}
+.mock-body{padding:16px}
+
+/* Dashboard hero mock */
+.dash-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.dash-card{background:rgba(43,123,174,0.07);border:1px solid rgba(43,123,174,0.1);
+  border-radius:8px;padding:12px 14px}
+.dash-card-l{font-size:9px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;
+  color:rgba(237,243,248,0.3);margin-bottom:5px}
+.dash-card-v{font-size:20px;font-weight:700;letter-spacing:-0.02em;line-height:1}
+.dash-card-v.or{color:#F5751C}.dash-card-v.gr{color:#34D399}.dash-card-v.wh{color:#EDF3F8}
+.dash-card-d{font-size:9px;color:#34D399;margin-top:2px}
+
+.deal-list{display:flex;flex-direction:column;gap:3px}
+.deal-row{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;
+  padding:8px 10px;background:rgba(255,255,255,0.015);border-radius:6px}
+.deal-addr{font-size:11px;color:rgba(237,243,248,0.55)}
+.deal-amt{font-size:11px;font-weight:700;color:#EDF3F8}
+.deal-badge{padding:2px 8px;border-radius:100px;font-size:9px;font-weight:600;letter-spacing:0.04em}
+.b-ok{background:rgba(52,211,153,0.08);color:#34D399;border:1px solid rgba(52,211,153,0.18)}
+.b-pnd{background:rgba(245,117,28,0.1);color:#F5751C;border:1px solid rgba(245,117,28,0.18)}
+.b-rev{background:rgba(251,191,36,0.08);color:#FBB724;border:1px solid rgba(251,191,36,0.18)}
+
+/* HIW mocks — smaller */
+.hiw-mock{background:#0A1520;border:1px solid rgba(43,123,174,0.2);
+  border-radius:10px;overflow:hidden;box-shadow:0 16px 48px rgba(0,0,0,0.4);
+  width:100%;font-size:11px}
+.hiw-mock-bar{height:30px;background:rgba(27,77,104,0.15);
+  border-bottom:1px solid rgba(43,123,174,0.1);
+  display:flex;align-items:center;padding:0 12px;gap:5px}
+.hiw-mock-bar span{font-size:10px;color:rgba(237,243,248,0.2);margin-left:6px;letter-spacing:0.05em}
+.hiw-mock-body{padding:12px 14px}
+
+/* Checklist mock */
+.cl-item{display:flex;align-items:center;gap:8px;padding:7px 0;
+  border-bottom:1px solid rgba(255,255,255,0.04)}
+.cl-item:last-child{border-bottom:none}
+.cl-check{width:16px;height:16px;border-radius:4px;display:flex;align-items:center;
+  justify-content:center;flex-shrink:0;font-size:9px}
+.cl-check.done{background:rgba(52,211,153,0.15);border:1px solid rgba(52,211,153,0.3);color:#34D399}
+.cl-check.miss{background:rgba(245,117,28,0.12);border:1px solid rgba(245,117,28,0.25);color:#F5751C}
+.cl-check.wait{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:transparent}
+.cl-label{font-size:11px;color:rgba(237,243,248,0.5)}
+.cl-label.done-t{color:rgba(237,243,248,0.35);text-decoration:line-through}
+.cl-label.miss-t{color:#F5751C}
+.cl-status-row{display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.04)}
+.cl-status-label{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;
+  color:rgba(237,243,248,0.25)}
+.cl-deal-name{font-size:12px;font-weight:600;color:#EDF3F8}
+
+/* Commission mock */
+.comm-total{text-align:center;padding:12px 0 14px;border-bottom:1px solid rgba(255,255,255,0.05);margin-bottom:10px}
+.comm-total-l{font-size:9px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;
+  color:rgba(237,243,248,0.25);margin-bottom:4px}
+.comm-total-v{font-size:28px;font-weight:800;color:#F5751C;letter-spacing:-0.02em;line-height:1}
+.comm-breakdown{display:flex;flex-direction:column;gap:3px}
+.comm-row{display:flex;justify-content:space-between;align-items:center;
+  padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.03)}
+.comm-row:last-child{border-bottom:none}
+.comm-label{font-size:10px;color:rgba(237,243,248,0.38)}
+.comm-val{font-size:11px;font-weight:600;color:#EDF3F8}
+.comm-val.or{color:#F5751C}.comm-val.dim{color:rgba(237,243,248,0.28);font-size:10px}
+.comm-bar-row{display:grid;grid-template-columns:80px 1fr auto;gap:8px;align-items:center;margin-top:10px;padding-top:8px;border-top:1px solid rgba(255,255,255,0.04)}
+.comm-bar-label{font-size:9px;color:rgba(237,243,248,0.3)}
+.comm-bar-track{height:3px;background:rgba(43,123,174,0.15);border-radius:2px;overflow:hidden}
+.comm-bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,#1B4D68,#F5751C);
+  width:0;transition:width 1.4s 0.3s ease}
+.comm-bar-fill.on{width:62%}
+.comm-bar-pct{font-size:9px;color:rgba(237,243,248,0.3)}
+
+/* Reporting mock */
+.rep-stats{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px}
+.rep-stat{background:rgba(43,123,174,0.07);border:1px solid rgba(43,123,174,0.1);
+  border-radius:6px;padding:10px 12px}
+.rep-stat-l{font-size:9px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;
+  color:rgba(237,243,248,0.25);margin-bottom:4px}
+.rep-stat-v{font-size:18px;font-weight:700;color:#EDF3F8;letter-spacing:-0.02em;line-height:1}
+.rep-stat-v.or{color:#F5751C}
+.rep-chart{height:60px;display:flex;align-items:flex-end;gap:4px;padding-top:8px;
+  border-top:1px solid rgba(255,255,255,0.04)}
+.rep-bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px}
+.rep-bar-seg{width:100%;border-radius:3px 3px 0 0;background:rgba(27,77,104,0.5);
+  transition:height 1.2s cubic-bezier(0.16,1,0.3,1);height:0}
+.rep-bar-seg.or{background:linear-gradient(to top,#F5751C,rgba(245,117,28,0.6))}
+.rep-bar-seg.on{/* height set by JS */}
+.rep-bar-l{font-size:8px;color:rgba(237,243,248,0.2)}
+
+/* Transaction mock */
+.tx-header{display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.05)}
+.tx-title{font-size:12px;font-weight:700;color:#EDF3F8}
+.tx-status{padding:3px 9px;background:rgba(52,211,153,0.08);
+  border:1px solid rgba(52,211,153,0.18);border-radius:100px;
+  font-size:9px;font-weight:600;color:#34D399;letter-spacing:0.04em}
+.tx-fields{display:flex;flex-direction:column;gap:1px}
+.tx-field{display:grid;grid-template-columns:110px 1fr;gap:8px;
+  padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.03)}
+.tx-field:last-child{border-bottom:none}
+.tx-field-l{font-size:10px;color:rgba(237,243,248,0.28)}
+.tx-field-v{font-size:10px;color:rgba(237,243,248,0.65);font-weight:500}
+.tx-field-v.typing::after{content:'|';animation:blink 1s step-end infinite;color:#F5751C}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.tx-flow-row{display:flex;align-items:center;gap:6px;margin-top:10px;
+  padding-top:8px;border-top:1px solid rgba(255,255,255,0.04)}
+.tx-flow-step{padding:4px 10px;border-radius:4px;font-size:9px;font-weight:600;
+  letter-spacing:0.06em;text-transform:uppercase}
+.tx-flow-step.done{background:rgba(52,211,153,0.1);color:#34D399;border:1px solid rgba(52,211,153,0.2)}
+.tx-flow-step.active{background:rgba(245,117,28,0.12);color:#F5751C;border:1px solid rgba(245,117,28,0.25);
+  box-shadow:0 0 10px rgba(245,117,28,0.12)}
+.tx-flow-step.idle{background:rgba(255,255,255,0.03);color:rgba(237,243,248,0.22);border:1px solid rgba(255,255,255,0.06)}
+.tx-flow-arrow{font-size:10px;color:rgba(237,243,248,0.15)}
+
+/* Floating notification */
+.notif{position:absolute;bottom:-14px;right:-14px;background:#0A1520;
+  border:1px solid rgba(52,211,153,0.25);border-radius:10px;
+  padding:10px 14px;box-shadow:0 8px 28px rgba(0,0,0,0.4);
+  display:flex;align-items:center;gap:10px;min-width:200px;
+  opacity:0;transform:translateY(8px);
+  transition:opacity 0.5s 1.8s, transform 0.5s 1.8s cubic-bezier(0.16,1,0.3,1)}
+.notif.on{opacity:1;transform:translateY(0)}
+.notif-dot{width:8px;height:8px;border-radius:50%;background:#34D399;
+  box-shadow:0 0 8px #34D399;flex-shrink:0;animation:pdot 2s ease-in-out infinite}
+.notif-text{font-size:11px;font-weight:500;color:rgba(237,243,248,0.7)}
+.notif-text strong{color:#EDF3F8;font-weight:700}
+
+/* HIW grid layout */
+.hiw-steps{display:flex;flex-direction:column;gap:0;position:relative}
+.hiw-step{display:grid;grid-template-columns:40px 1fr 340px;gap:28px;
+  align-items:center;padding:36px 0;border-bottom:1px solid var(--bd2);position:relative;z-index:1}
+.hiw-step:last-child{border-bottom:none}
+.hiw-mock-wrap{position:relative}
+
+/* Number pulse on entry */
+.hiw-num{transition:box-shadow 0.3s,border-color 0.3s}
+.hiw-step.on .hiw-num{border-color:rgba(245,117,28,0.6);box-shadow:0 0 22px rgba(245,117,28,0.18)}
+
+/* Animated counter spans */
+.stat-count{display:inline-block}
+
+@media(max-width:960px){
+  .mock-wrap{display:none}
+  .hiw-step{grid-template-columns:40px 1fr}
+  .hiw-mock-wrap{display:none}
+  .hero{grid-template-columns:1fr}
+}
+
+/* ── ANIMATIONS ── */
+/* Slide in from left */
+[data-r-left]{opacity:0;transform:translateX(-28px);
+  transition:opacity 0.75s cubic-bezier(0.16,1,0.3,1),transform 0.75s cubic-bezier(0.16,1,0.3,1)}
+[data-r-left].on{opacity:1;transform:translateX(0)}
+[data-r-left][data-d="1"]{transition-delay:0.1s}
+[data-r-left][data-d="2"]{transition-delay:0.2s}
+[data-r-left][data-d="3"]{transition-delay:0.3s}
+[data-r-left][data-d="4"]{transition-delay:0.4s}
+[data-r-left][data-d="5"]{transition-delay:0.5s}
+
+/* Scale in */
+[data-r-scale]{opacity:0;transform:scale(0.95);
+  transition:opacity 0.65s cubic-bezier(0.16,1,0.3,1),transform 0.65s cubic-bezier(0.16,1,0.3,1)}
+[data-r-scale].on{opacity:1;transform:scale(1)}
+
+/* Counter */
+.count-num{display:inline-block}
+
+/* Tile hover lift */
+.tile{transform:translateY(0);transition:all 0.28s cubic-bezier(0.16,1,0.3,1),
+  border-color 0.25s,background 0.25s}
+.tile:hover{transform:translateY(-3px);
+  box-shadow:0 12px 40px rgba(0,0,0,0.25)}
+
+/* Module hover */
+.mod{transition:background 0.22s,transform 0.22s}
+.mod:hover{transform:translateY(-2px)}
+
+/* Nav link underline sweep */
+.nav-links a{position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;
+  background:var(--orange);transition:width 0.25s}
+.nav-links a:hover::after{width:100%}
+
+/* Pill glow pulse */
+.hero-pill{animation:pill-pulse 4s ease-in-out infinite}
+@keyframes pill-pulse{0%,100%{box-shadow:0 0 0 0 rgba(245,117,28,0)}
+  50%{box-shadow:0 0 16px 2px rgba(245,117,28,0.12)}}
+
+/* Aurora speed up slightly for more life */
+
+@media(max-width:900px){
+  nav{padding:0 20px}.nav-links{display:none}
+  .hero,.problem,.fails,.ba,.platform,.serhant,.awards,.close{padding-left:20px;padding-right:20px}
+  footer{padding:48px 20px 32px}
+  .tiles,.modules{grid-template-columns:1fr}
+  .s-inner{grid-template-columns:1fr;gap:40px;padding:64px 0}
+  .ba-heads,.ba-row{grid-template-columns:1fr}
+  .ba-hd.b,.ba-c.b{border-right:none;border-bottom:1px solid var(--bd)}
+  .ft-top{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="aurora">
+  <div class="ab ab1"></div>
+  <div class="ab ab2"></div>
+  <div class="ab ab3"></div>
+  <div class="a-noise"></div>
+</div>
+
+<div class="page">
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo"><span>Total</span>Brokerage</div>
+  <div class="nav-links">
+    <a href="#">Platform</a>
+    <a href="#">Pricing</a>
+    <a href="#">Case Studies</a>
+    <a href="#">Resources</a>
+    <a href="#">About</a>
+  </div>
+  <div class="nav-r">
+    <a href="#" class="nav-login">Log in</a>
+    <a href="#" class="nav-cta">Book a Demo</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <!-- LEFT -->
+  <div class="hero-left">
+    <div class="hero-pill" data-r><div class="pill-dot"></div>Purpose-built for residential real estate</div>
+    <h1 class="hero-h1" data-r data-d="1">
+      <span class="h1-top">Every deal. Every dollar.</span>
+      <span class="h1-bot">One platform.</span>
+    </h1>
+    <p class="hero-sub" data-r data-d="2">Transaction management, compliance, commissions, and agent management — <strong>connected, automated, and visible in one platform built for residential real estate.</strong></p>
+    <div class="hero-btns" data-r data-d="3">
+      <a href="#" class="btn-p">Book a Demo <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      <a href="#" class="btn-s">See the platform</a>
+    </div>
+    <div class="hero-logos" data-r data-d="4">
+      <span class="logos-lbl">Trusted by</span>
+      <span class="logo-n">SERHANT.</span>
+      <div class="logo-sep"></div>
+      <span class="logo-n">Corcoran</span>
+      <div class="logo-sep"></div>
+      <span class="logo-n">Unity RE</span>
+      <div class="logo-sep"></div>
+      <span class="logo-n">Signature</span>
+    </div>
+  </div>
+
+  <!-- RIGHT — animated dashboard mock -->
+  <div class="hero-right" data-r data-d="2">
+    <div class="mock-wrap" style="position:relative">
+      <div class="mock-screen">
+        <div class="mock-titlebar">
+          <div class="mock-dot mock-dot-r"></div>
+          <div class="mock-dot mock-dot-y"></div>
+          <div class="mock-dot mock-dot-g"></div>
+          <span class="mock-title">TotalBrokerage — Dashboard</span>
+        </div>
+        <div class="mock-body">
+          <div class="dash-summary">
+            <div class="dash-card">
+              <div class="dash-card-l">Commissions MTD</div>
+              <div class="dash-card-v or" id="hero-c1">$0</div>
+              <div class="dash-card-d">↑ 100% accurate</div>
+            </div>
+            <div class="dash-card">
+              <div class="dash-card-l">Open deals</div>
+              <div class="dash-card-v wh" id="hero-c2">0</div>
+              <div class="dash-card-d" style="color:rgba(237,243,248,0.3)">live pipeline</div>
+            </div>
+            <div class="dash-card">
+              <div class="dash-card-l">Compliance</div>
+              <div class="dash-card-v gr" id="hero-c3">0%</div>
+              <div class="dash-card-d">all deals monitored</div>
+            </div>
+          </div>
+          <div class="deal-list">
+            <div class="deal-row mock-fade" style="opacity:0;transition:opacity 0.4s 0.8s"><span class="deal-addr">247 Maple St — Buyer</span><span class="deal-amt">$7,200</span><span class="deal-badge b-ok">Compliant</span></div>
+            <div class="deal-row mock-fade" style="opacity:0;transition:opacity 0.4s 1.0s"><span class="deal-addr">88 Pine Ave — Seller</span><span class="deal-amt">$12,450</span><span class="deal-badge b-ok">Compliant</span></div>
+            <div class="deal-row mock-fade" style="opacity:0;transition:opacity 0.4s 1.2s"><span class="deal-addr">516 Oak Court — Dual</span><span class="deal-amt">$18,200</span><span class="deal-badge b-pnd">Docs pending</span></div>
+            <div class="deal-row mock-fade" style="opacity:0;transition:opacity 0.4s 1.4s"><span class="deal-addr">1422 Harbor Dr</span><span class="deal-amt">$9,875</span><span class="deal-badge b-ok">Compliant</span></div>
+            <div class="deal-row mock-fade" style="opacity:0;transition:opacity 0.4s 1.6s"><span class="deal-addr">305 Willow Ln — Seller</span><span class="deal-amt">$11,400</span><span class="deal-badge b-rev">In Review</span></div>
+          </div>
+        </div>
+      </div>
+      <!-- Floating notification -->
+      <div class="notif" id="hero-notif">
+        <div class="notif-dot"></div>
+        <div class="notif-text"><strong>Commission paid</strong> — Agent #4712 · $7,200</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<div class="problem">
+  <h2 class="prob-h" data-r>You run a brokerage,<br>not a <em class="grad-text">data entry</em><br>business.</h2>
+
+  <div class="tiles">
+    <div class="tile" data-r-scale data-d="1">
+      <div class="tile-n">01 — Commissions</div>
+      <h3>Your agent is auditing your work.</h3>
+      <p>Splits, overrides, and cap schedules calculated by hand. <strong>When the number's wrong, the agent calls before you know why.</strong></p>
+    </div>
+    <div class="tile" data-r-scale data-d="2">
+      <div class="tile-n">02 — Deals</div>
+      <h3>Six tools. Zero visibility.</h3>
+      <p>Contracts in email. Docs in DocuSign. Transactions elsewhere. <strong>Your top producers know more about your pipeline than you do.</strong></p>
+    </div>
+    <div class="tile" data-r-scale data-d="3">
+      <div class="tile-n">03 — Compliance</div>
+      <h3>The paperwork catches up eventually.</h3>
+      <p>Compliance gaps accumulate quietly. <strong>They surface at the worst possible moment — and you're the broker of record.</strong></p>
+    </div>
+  </div>
+</div>
+
+
+<!-- HOW IT WORKS -->
+<div class="hiw">
+  <p class="hiw-tag" data-r>How it works</p>
+  <h2 class="hiw-h" data-r data-d="1">From signed contract<br>to closed deal — automated.</h2>
+  <div class="hiw-steps">
+
+    <!-- Step 01: Transaction -->
+    <div class="hiw-step" data-r-left data-d="1">
+      <div class="hiw-num">01</div>
+      <div class="hiw-content">
+        <div class="hiw-tag-inline">Transaction Management</div>
+        <h3>Contract data flows in automatically.</h3>
+        <p>The moment a contract is signed, key details populate your transaction — no re-entry, no interpretation errors. <strong>Every document, every deadline, every party — in one place from day one.</strong></p>
+      </div>
+      <div class="hiw-mock-wrap" data-r data-d="2">
+        <div class="hiw-mock">
+          <div class="hiw-mock-bar">
+            <div class="mock-dot mock-dot-r"></div><div class="mock-dot mock-dot-y"></div><div class="mock-dot mock-dot-g"></div>
+            <span>Transaction #0891</span>
+          </div>
+          <div class="hiw-mock-body">
+            <div class="tx-header">
+              <span class="tx-title">247 Maple St — Buyer Side</span>
+              <span class="tx-status">Active</span>
+            </div>
+            <div class="tx-fields">
+              <div class="tx-field"><span class="tx-field-l">Property address</span><span class="tx-field-v">247 Maple Street, Austin TX</span></div>
+              <div class="tx-field"><span class="tx-field-l">Purchase price</span><span class="tx-field-v" id="tx-price">—</span></div>
+              <div class="tx-field"><span class="tx-field-l">Close date</span><span class="tx-field-v" id="tx-date">—</span></div>
+              <div class="tx-field"><span class="tx-field-l">Buyer agent</span><span class="tx-field-v">Sarah J. — Lic. #TX-44821</span></div>
+              <div class="tx-field"><span class="tx-field-l">Source</span><span class="tx-field-v" style="color:#34D399;font-size:9px">↑ Auto-pulled from contract</span></div>
+            </div>
+            <div class="tx-flow-row">
+              <div class="tx-flow-step done">Contract</div>
+              <div class="tx-flow-arrow">›</div>
+              <div class="tx-flow-step active">Compliance</div>
+              <div class="tx-flow-arrow">›</div>
+              <div class="tx-flow-step idle">Commission</div>
+              <div class="tx-flow-arrow">›</div>
+              <div class="tx-flow-step idle">Close</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 02: Compliance -->
+    <div class="hiw-step" data-r-left data-d="1">
+      <div class="hiw-num">02</div>
+      <div class="hiw-content">
+        <div class="hiw-tag-inline">Compliance</div>
+        <h3>Checklists run. Gaps get flagged before they matter.</h3>
+        <p>Automated compliance checklists track every document requirement in real time. <strong>You see which deals are at risk before they close</strong> — not after.</p>
+      </div>
+      <div class="hiw-mock-wrap" data-r data-d="2">
+        <div class="hiw-mock">
+          <div class="hiw-mock-bar">
+            <div class="mock-dot mock-dot-r"></div><div class="mock-dot mock-dot-y"></div><div class="mock-dot mock-dot-g"></div>
+            <span>Compliance Checklist</span>
+          </div>
+          <div class="hiw-mock-body">
+            <div class="cl-status-row">
+              <span class="cl-deal-name">516 Oak Court — Dual</span>
+              <span class="deal-badge b-pnd">1 issue</span>
+            </div>
+            <div class="cl-item"><div class="cl-check done">✓</div><span class="cl-label done-t">Purchase agreement</span></div>
+            <div class="cl-item"><div class="cl-check done">✓</div><span class="cl-label done-t">Agency disclosure</span></div>
+            <div class="cl-item cl-flagged" style="background:rgba(245,117,28,0.04);border-radius:5px;padding:4px 6px;margin:0 -6px"><div class="cl-check miss">!</div><span class="cl-label miss-t">Lead paint disclosure — missing</span></div>
+            <div class="cl-item"><div class="cl-check done">✓</div><span class="cl-label done-t">Earnest money receipt</span></div>
+            <div class="cl-item"><div class="cl-check wait"></div><span class="cl-label" style="color:rgba(237,243,248,0.25)">Final walkthrough</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 03: Commissions -->
+    <div class="hiw-step" data-r-left data-d="1">
+      <div class="hiw-num">03</div>
+      <div class="hiw-content">
+        <div class="hiw-tag-inline">Commissions</div>
+        <h3>Commissions calculate the moment a deal closes.</h3>
+        <p>Split rules, cap schedules, overrides, and referral fees run automatically at close. <strong>Accurate to the cent, every time.</strong> The agent never has to ask where their money is.</p>
+      </div>
+      <div class="hiw-mock-wrap" data-r data-d="2">
+        <div class="hiw-mock">
+          <div class="hiw-mock-bar">
+            <div class="mock-dot mock-dot-r"></div><div class="mock-dot mock-dot-y"></div><div class="mock-dot mock-dot-g"></div>
+            <span>Commission Breakdown</span>
+          </div>
+          <div class="hiw-mock-body">
+            <div class="comm-total">
+              <div class="comm-total-l">Total commission</div>
+              <div class="comm-total-v" id="comm-total">$0</div>
+            </div>
+            <div class="comm-breakdown">
+              <div class="comm-row"><span class="comm-label">Gross commission (3%)</span><span class="comm-val">$18,000</span></div>
+              <div class="comm-row"><span class="comm-label">Agent split (70%)</span><span class="comm-val or" id="comm-agent">$0</span></div>
+              <div class="comm-row"><span class="comm-label">Referral fee (10%)</span><span class="comm-val dim">− $1,800</span></div>
+              <div class="comm-row"><span class="comm-label">E&O deduction</span><span class="comm-val dim">− $150</span></div>
+              <div class="comm-row"><span class="comm-label" style="color:#EDF3F8;font-weight:600">Agent payout</span><span class="comm-val or" style="font-size:13px">$10,650</span></div>
+            </div>
+            <div class="comm-bar-row">
+              <span class="comm-bar-label">Agent vs brokerage</span>
+              <div class="comm-bar-track"><div class="comm-bar-fill" id="comm-bar"></div></div>
+              <span class="comm-bar-pct">62% / 38%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 04: Reporting -->
+    <div class="hiw-step" data-r-left data-d="1">
+      <div class="hiw-num">04</div>
+      <div class="hiw-content">
+        <div class="hiw-tag-inline">Reporting</div>
+        <h3>You see everything live — before anyone calls to ask.</h3>
+        <p>Real-time dashboards across every deal, every agent, and every dollar. Pipeline health, agent performance, profitability — <strong>all visible without picking up the phone.</strong></p>
+      </div>
+      <div class="hiw-mock-wrap" data-r data-d="2">
+        <div class="hiw-mock">
+          <div class="hiw-mock-bar">
+            <div class="mock-dot mock-dot-r"></div><div class="mock-dot mock-dot-y"></div><div class="mock-dot mock-dot-g"></div>
+            <span>Brokerage Report — Live</span>
+          </div>
+          <div class="hiw-mock-body">
+            <div class="rep-stats">
+              <div class="rep-stat"><div class="rep-stat-l">Revenue MTD</div><div class="rep-stat-v or" id="rep-rev">$0</div></div>
+              <div class="rep-stat"><div class="rep-stat-l">Deals closed</div><div class="rep-stat-v" id="rep-deals">0</div></div>
+              <div class="rep-stat"><div class="rep-stat-l">Top agent</div><div class="rep-stat-v" style="font-size:13px;color:#EDF3F8">Sarah J.</div></div>
+              <div class="rep-stat"><div class="rep-stat-l">Avg commission</div><div class="rep-stat-v or" style="font-size:15px">$11.2k</div></div>
+            </div>
+            <div class="rep-chart" id="rep-chart">
+              <div class="rep-bar-col"><div class="rep-bar-seg" id="rb1" style="height:0"></div><div class="rep-bar-l">Jan</div></div>
+              <div class="rep-bar-col"><div class="rep-bar-seg" id="rb2" style="height:0"></div><div class="rep-bar-l">Feb</div></div>
+              <div class="rep-bar-col"><div class="rep-bar-seg" id="rb3" style="height:0"></div><div class="rep-bar-l">Mar</div></div>
+              <div class="rep-bar-col"><div class="rep-bar-seg or" id="rb4" style="height:0"></div><div class="rep-bar-l">Apr</div></div>
+              <div class="rep-bar-col"><div class="rep-bar-seg" id="rb5" style="height:0"></div><div class="rep-bar-l">May</div></div>
+              <div class="rep-bar-col"><div class="rep-bar-seg" id="rb6" style="height:0"></div><div class="rep-bar-l">Jun</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- PLATFORM MODULES -->
+<div class="platform">
+  <p class="plat-tag" data-r>The platform</p>
+  <h2 class="plat-h" data-r data-d="1">Everything in one place.<br>Connected automatically.</h2>
+  <div class="modules">
+    <div class="mod" data-r data-d="1">
+      <div class="mod-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+      <h4>Transaction Management</h4>
+      <p>Every deal tracked from contract to close. Documents stored and auditable. Checklists run automatically.</p>
+    </div>
+    <div class="mod" data-r data-d="1">
+      <div class="mod-icon"><svg viewBox="0 0 24 24"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+      <h4>Commissions & Financials</h4>
+      <p>Complex splits, overrides, referral fees, and caps — calculated automatically at close. Accurate every time.</p>
+    </div>
+    <div class="mod" data-r data-d="2">
+      <div class="mod-icon"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+      <h4>Compliance</h4>
+      <p>Automated checklists and broker oversight on every transaction. Know what's at risk before a deal closes.</p>
+    </div>
+    <div class="mod" data-r data-d="2">
+      <div class="mod-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+      <h4>Reporting</h4>
+      <p>Real-time dashboards across deal flow, agent performance, and brokerage profitability. Live, not last month.</p>
+    </div>
+    <div class="mod" data-r data-d="3">
+      <div class="mod-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+      <h4>Agent Management</h4>
+      <p>Onboarding, licensing, commission plans, billing, and payouts. Manage 10 agents or 2,000 with the same precision.</p>
+    </div>
+    <div class="mod" data-r data-d="3">
+      <div class="mod-icon"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg></div>
+      <h4>E-Signature & API</h4>
+      <p>Built-in e-signature, open API, and Zapier integration. Connect the tools you use and keep everything in sync.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SERHANT -->
+<div class="serhant">
+  <div class="s-inner">
+    <div data-r>
+      <p class="s-setup">The most successful broker in the country spent 13 years looking for this.</p>
+      <p class="s-q">"One of the first things I needed was a back office deal tracking system. <strong>TotalBrokerage is the only one that does everything you need to run your real estate brokerage business.</strong> I've been looking for a system for almost 13 years, and this is the one I found that works."</p>
+      <div class="s-attr">
+        <div class="s-av">RS</div>
+        <div>
+          <div class="s-name">Ryan Serhant</div>
+          <div class="s-role">CEO & Founder, SERHANT.</div>
+        </div>
+      </div>
+    </div>
+    <div class="s-cards" data-r data-d="2">
+      <div class="s-card">
+        <p class="s-card-q">"I was searching for quite some time for a system that met all of our needs in one platform. <strong>I really didn't think it existed.</strong> Their customer care is outstanding and they are always very responsive."</p>
+        <div class="s-card-attr">Jeanine Corcoran <span>— The Corcoran Connection</span></div>
+      </div>
+      <div class="s-card">
+        <p class="s-card-q">Recognized as <strong>Best-in-Class Back Office Accounting</strong> two consecutive years. G2 High Performer and Best Support, Spring 2025.</p>
+        <div class="s-card-attr">T3 Tech 200 <span>— 2024 & 2025</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AWARDS -->
+<div class="awards">
+  <div class="aw-inner" data-r>
+    <p class="aw-lbl">Industry recognition</p>
+    <div class="aw-row">
+      <div class="aw"><span class="aw-star">★</span> G2 High Performer · Spring 2025</div>
+      <div class="aw"><span class="aw-star">★</span> G2 Best Support · 2025</div>
+      <div class="aw"><span class="aw-star">★</span> T3 Tech 200 Best-in-Class Accounting · 2024 & 2025</div>
+      <div class="aw"><span class="aw-star">★</span> Capterra Shortlist · 2025</div>
+      <div class="aw"><span class="aw-star">★</span> Software Advice Front Runners · 2025</div>
+      <div class="aw"><span class="aw-star">★</span> GetApp Best Features · 2025</div>
+    </div>
+  </div>
+</div>
+
+<!-- CLOSE CTA -->
+<div class="close">
+  <h2 class="close-h" data-r>The brokerages winning<br>are working with<br><em>better information.</em></h2>
+  <p class="close-sub" data-r data-d="1">See how serious operators run their back office.</p>
+  <div class="close-btns" data-r data-d="2">
+    <a href="#" class="btn-p">Book a Demo <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    <a href="#" class="btn-o">See Pricing</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft">
+    <div class="ft-top">
+      <div>
+        <div class="nav-logo" style="margin-bottom:10px"><span>Total</span>Brokerage</div>
+        <p class="ft-desc">Purpose-built back office for residential real estate. Built since 2015.</p>
+      </div>
+      <div>
+        <p class="ft-col-h">Platform</p>
+        <ul class="ft-links">
+          <li><a href="#">Transaction Management</a></li>
+          <li><a href="#">Compliance</a></li>
+          <li><a href="#">Commissions</a></li>
+          <li><a href="#">Reporting</a></li>
+          <li><a href="#">E-Signature</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="ft-col-h">Platform</p>
+        <ul class="ft-links">
+          <li><a href="#">Agent Management</a></li>
+          <li><a href="#">Agent Payouts</a></li>
+          <li><a href="#">Agent Billing</a></li>
+          <li><a href="#">Deal Sync</a></li>
+          <li><a href="#">API & Zapier</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="ft-col-h">Resources</p>
+        <ul class="ft-links">
+          <li><a href="#">Case Studies</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Knowledge Base</a></li>
+          <li><a href="#">Pricing</a></li>
+          <li><a href="#">Pricing Calculator</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="ft-col-h">Company</p>
+        <ul class="ft-links">
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">News</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Login</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ft-bot">
+      <p class="ft-copy">© 2025 Brokerage Management Solutions, Inc.</p>
+      <div class="ft-legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">SaaS Agreement</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</div>
+
+<script>
+// ── reveal observer ──
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('[data-r],[data-r-left],[data-r-scale]').forEach(el => io.observe(el));
+
+// Hero fires on load
+setTimeout(() => {
+  document.querySelectorAll('.hero [data-r],[data-r-left],[data-r-scale]').forEach(el => el.classList.add('on'));
+  animateHeroDash();
+}, 80);
+
+// ── counter util ──
+function animateVal(el, target, prefix='', suffix='', duration=1200) {
+  if (!el) return;
+  const start = performance.now();
+  const run = now => {
+    const p = Math.min((now - start) / duration, 1);
+    const e = 1 - Math.pow(1 - p, 3);
+    el.textContent = prefix + Math.round(e * target).toLocaleString() + suffix;
+    if (p < 1) requestAnimationFrame(run);
+  };
+  requestAnimationFrame(run);
+}
+
+// ── Hero dashboard animation ──
+function animateHeroDash() {
+  // fade in deal rows
+  document.querySelectorAll('.mock-fade').forEach(el => el.style.opacity = '1');
+  // notification pop
+  const notif = document.getElementById('hero-notif');
+  if (notif) notif.classList.add('on');
+  // counters
+  animateVal(document.getElementById('hero-c1'), 284100, '$', '', 1400);
+  animateVal(document.getElementById('hero-c2'), 24, '', '', 900);
+  animateVal(document.getElementById('hero-c3'), 94, '', '%', 1000);
+}
+
+// ── HIW mock animations (fire on scroll) ──
+const hiwObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const step = e.target.closest('.hiw-step');
+    if (!step) return;
+    const idx = [...document.querySelectorAll('.hiw-step')].indexOf(step);
+
+    if (idx === 0) animateTxMock();
+    if (idx === 1) { /* checklist is static */ }
+    if (idx === 2) animateCommMock();
+    if (idx === 3) animateRepMock();
+    hiwObs.unobserve(e.target);
+  });
+}, { threshold: 0.4 });
+document.querySelectorAll('.hiw-mock').forEach(m => hiwObs.observe(m));
+
+// Step 01 — Transaction: type in price + date
+function animateTxMock() {
+  const price = document.getElementById('tx-price');
+  const date = document.getElementById('tx-date');
+  if (!price || !date) return;
+  setTimeout(() => typeValue(price, '$600,000'), 400);
+  setTimeout(() => typeValue(date, 'May 28, 2026'), 900);
+}
+function typeValue(el, val) {
+  el.classList.add('typing');
+  let i = 0;
+  const t = setInterval(() => {
+    el.textContent = val.slice(0, ++i);
+    if (i >= val.length) { clearInterval(t); el.classList.remove('typing'); }
+  }, 50);
+}
+
+// Step 03 — Commission: count up
+function animateCommMock() {
+  animateVal(document.getElementById('comm-total'), 18000, '$', '', 1000);
+  setTimeout(() => animateVal(document.getElementById('comm-agent'), 12600, '$', '', 900), 200);
+  const bar = document.getElementById('comm-bar');
+  if (bar) setTimeout(() => bar.classList.add('on'), 500);
+}
+
+// Step 04 — Reporting: count + chart bars
+function animateRepMock() {
+  animateVal(document.getElementById('rep-rev'), 284100, '$', '', 1200);
+  animateVal(document.getElementById('rep-deals'), 18, '', '', 900);
+  const heights = [28, 36, 32, 48, 24, 38]; // px heights
+  ['rb1','rb2','rb3','rb4','rb5','rb6'].forEach((id, i) => {
+    const el = document.getElementById(id);
+    if (el) setTimeout(() => { el.style.height = heights[i] + 'px'; }, 200 + i * 120);
+  });
+}
+
+// ── Module grid stagger ──
+const modObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    e.target.querySelectorAll('.mod').forEach((m, i) => {
+      setTimeout(() => m.classList.add('on'), i * 65);
+    });
+  });
+}, { threshold: 0.1 });
+const modGrid = document.querySelector('.modules');
+if (modGrid) {
+  modGrid.querySelectorAll('.mod').forEach(m => { m.setAttribute('data-r',''); m.style.transitionDelay = '0s'; });
+  modObs.observe(modGrid);
+}
+</script>
+
+<div id="preview-banner" style="position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(27,77,104,.95);color:#EDF3F8;padding:11px 24px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(12px);font-size:13px;font-weight:500;border-top:1px solid rgba(43,123,174,.3)">
+  <span>🔧 <strong>TotalBrokerage Redesign Preview</strong> — <a href="start-here.html" style="color:#F5751C;text-decoration:none;font-weight:600">All pages →</a> &nbsp;|&nbsp; <a href="https://www.totalbrokerage.com" target="_blank" style="color:rgba(237,243,248,.5)">View live site</a></span>
+  <button onclick="document.getElementById('preview-banner').style.display='none'" style="background:rgba(255,255,255,.12);border:none;color:#EDF3F8;width:24px;height:24px;border-radius:50%;cursor:pointer;font-size:15px;line-height:1;display:flex;align-items:center;justify-content:center">×</button>
+</div>
+</body>
+</html>

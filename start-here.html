@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>TotalBrokerage — Site Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#070E18;font-family:'Outfit',sans-serif;color:#EDF3F8;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 20px}
+.container{max-width:900px;width:100%;text-align:center}
+.logo{font-size:24px;font-weight:700;color:#EDF3F8;margin-bottom:8px}
+.logo span{color:#F5751C}
+.subtitle{font-size:14px;color:rgba(237,243,248,.4);margin-bottom:48px}
+.section-title{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(237,243,248,.25);margin-bottom:16px;text-align:left}
+.pages{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;margin-bottom:36px}
+.page-link{display:block;padding:14px 16px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.07);border-radius:10px;text-decoration:none;color:rgba(237,243,248,.6);font-size:13px;font-weight:500;text-align:left;transition:all .2s}
+.page-link:hover{background:rgba(245,117,28,.06);border-color:rgba(245,117,28,.25);color:#EDF3F8;transform:translateY(-1px)}
+.page-link.featured{background:rgba(245,117,28,.06);border-color:rgba(245,117,28,.2);color:#F5751C}
+.page-link .pg-label{font-size:10px;color:rgba(237,243,248,.28);margin-top:2px}
+.badge{display:inline-block;padding:1px 7px;border-radius:100px;font-size:9px;font-weight:600;background:rgba(245,117,28,.12);color:#F5751C;border:1px solid rgba(245,117,28,.2);margin-left:6px}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="logo"><span>Total</span>Brokerage</div>
+  <div class="subtitle">Redesign Preview — Open any page below</div>
+
+  <div class="section-title">Main pages</div>
+  <div class="pages">
+    <a href="index.html" class="page-link featured">Homepage<div class="pg-label">Full interactive site<span class="badge">New</span></div></a>
+    <a href="pricing.html" class="page-link">Pricing<div class="pg-label">3-tier pricing cards</div></a>
+    <a href="about-us.html" class="page-link">About Us<div class="pg-label">Origin story + stats</div></a>
+    <a href="case-study.html" class="page-link">Case Studies<div class="pg-label">SERHANT + others</div></a>
+    <a href="resources.html" class="page-link">Resources<div class="pg-label">Blog, docs, guides</div></a>
+    <a href="book-a-demo.html" class="page-link">Book a Demo<div class="pg-label">Demo request form</div></a>
+  </div>
+
+  <div class="section-title">Platform pages</div>
+  <div class="pages">
+    <a href="platform/transaction-management.html" class="page-link">Transaction Mgmt<div class="pg-label">Interactive demo</div></a>
+    <a href="platform/compliance.html" class="page-link">Compliance<div class="pg-label">Interactive demo</div></a>
+    <a href="platform/commissions-financials.html" class="page-link">Commissions<div class="pg-label">Interactive demo</div></a>
+    <a href="platform/reporting.html" class="page-link">Reporting<div class="pg-label">Interactive demo</div></a>
+    <a href="platform/e-signature.html" class="page-link">E-Signature<div class="pg-label"></div></a>
+    <a href="platform/agent-management.html" class="page-link">Agent Management<div class="pg-label"></div></a>
+    <a href="platform/agent-payouts.html" class="page-link">Agent Payouts<div class="pg-label"></div></a>
+    <a href="platform/agent-billing.html" class="page-link">Agent Billing<div class="pg-label"></div></a>
+    <a href="platform/deal-sync.html" class="page-link">Deal Sync<div class="pg-label"></div></a>
+    <a href="platform/api-zapier.html" class="page-link">API & Zapier<div class="pg-label"></div></a>
+  </div>
+</div>
+</body>
+</html>

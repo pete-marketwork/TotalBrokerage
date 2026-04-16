@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive Demo | TotalBrokerage</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#070E18;color:#EDF3F8;font-family:'Outfit',sans-serif;height:100%;overflow:hidden;-webkit-font-smoothing:antialiased}
+
+:root{
+  --bg:#070E18;--s1:#0C1825;--s2:#101F30;
+  --teal:#1B4D68;--tb:#3A9AD4;--or:#F5751C;
+  --og:rgba(245,117,28,0.10);--wh:#EDF3F8;--mu:#607D92;
+  --bd:rgba(255,255,255,0.07);--bd2:rgba(255,255,255,0.04)
+}
+
+/* Aurora */
+.aurora{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.ab{position:absolute;border-radius:50%;filter:blur(80px)}
+.ab1{width:700px;height:700px;top:-200px;left:-150px;background:radial-gradient(circle,rgba(27,77,104,.7) 0%,transparent 65%);animation:adrift 18s ease-in-out infinite alternate}
+.ab2{width:500px;height:500px;bottom:-100px;right:-100px;background:radial-gradient(circle,rgba(245,117,28,.3) 0%,transparent 65%);filter:blur(100px);animation:adrift 14s ease-in-out infinite alternate-reverse}
+@keyframes adrift{0%{transform:translate(0,0)}100%{transform:translate(40px,35px)}}
+
+/* Layout */
+.shell{position:relative;z-index:1;display:grid;grid-template-rows:60px 1fr;height:100vh}
+
+/* Top bar */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:0 28px;border-bottom:1px solid var(--bd);background:rgba(7,14,24,.85);backdrop-filter:blur(20px)}
+.topbar-logo{font-size:16px;font-weight:700;color:var(--wh);cursor:pointer;text-decoration:none}
+.topbar-logo span{color:var(--or)}
+.topbar-right{display:flex;gap:10px;align-items:center}
+.topbar-back{font-size:13px;color:rgba(237,243,248,.4);text-decoration:none;display:flex;align-items:center;gap:5px;transition:color .2s}
+.topbar-back:hover{color:var(--wh)}
+.topbar-cta{padding:7px 18px;background:var(--or);color:#fff;border-radius:100px;font-size:13px;font-weight:600;text-decoration:none;transition:all .2s;box-shadow:0 0 16px rgba(245,117,28,.2)}
+.topbar-cta:hover{opacity:.88}
+
+/* Main area */
+.main{display:grid;grid-template-columns:300px 1fr;overflow:hidden}
+
+/* Left sidebar */
+.sidebar{border-right:1px solid var(--bd);overflow-y:auto;padding:20px 12px;display:flex;flex-direction:column;gap:2px;background:rgba(10,18,30,.4);scrollbar-width:thin;scrollbar-color:var(--teal) transparent}
+.sidebar::-webkit-scrollbar{width:3px}
+.sidebar::-webkit-scrollbar-thumb{background:var(--teal);border-radius:2px}
+
+.sidebar-label{font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(237,243,248,.2);padding:4px 12px 10px;margin-top:6px}
+.sidebar-label:first-child{margin-top:0}
+
+.feature-btn{width:100%;background:none;border:none;cursor:pointer;padding:10px 12px;border-radius:10px;display:flex;align-items:center;gap:12px;transition:all .18s;text-align:left;position:relative}
+.feature-btn:hover{background:rgba(255,255,255,.04)}
+.feature-btn.active{background:rgba(245,117,28,.08);border:1px solid rgba(245,117,28,.18)}
+.feature-btn.active::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:3px;height:60%;background:var(--or);border-radius:0 3px 3px 0}
+
+.feat-icon{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .18s}
+.feature-btn.active .feat-icon{background:rgba(245,117,28,.12);border:1px solid rgba(245,117,28,.2)}
+.feature-btn:not(.active) .feat-icon{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06)}
+.feat-icon svg{width:15px;height:15px;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;fill:none}
+.feature-btn.active .feat-icon svg{stroke:var(--or)}
+.feature-btn:not(.active) .feat-icon svg{stroke:rgba(237,243,248,.35)}
+
+.feat-info{}
+.feat-name{font-size:13px;font-weight:600;color:rgba(237,243,248,.75);line-height:1.2;margin-bottom:2px;font-family:'Outfit',sans-serif}
+.feature-btn.active .feat-name{color:var(--wh)}
+.feat-desc{font-size:11px;font-weight:400;color:rgba(237,243,248,.3);line-height:1.4;font-family:'Outfit',sans-serif}
+.live-badge{margin-left:auto;font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:100px;background:rgba(245,117,28,.1);color:var(--or);border:1px solid rgba(245,117,28,.18);flex-shrink:0}
+.soon-badge{margin-left:auto;font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:100px;background:rgba(255,255,255,.04);color:rgba(237,243,248,.25);border:1px solid rgba(255,255,255,.06);flex-shrink:0}
+
+/* Demo area */
+.demo-area{display:flex;flex-direction:column;overflow:hidden;position:relative}
+
+/* Demo header strip */
+.demo-header{padding:14px 24px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;background:rgba(10,18,30,.3)}
+.demo-breadcrumb{font-size:12px;color:rgba(237,243,248,.3)}
+.demo-breadcrumb span{color:var(--wh);font-weight:500}
+.demo-title{font-size:15px;font-weight:600;color:var(--wh)}
+.demo-actions{display:flex;gap:8px;align-items:center}
+.demo-fullscreen{padding:5px 12px;background:rgba(255,255,255,.04);border:1px solid var(--bd);border-radius:6px;font-size:12px;color:rgba(237,243,248,.45);cursor:pointer;transition:all .2s;font-family:'Outfit',sans-serif}
+.demo-fullscreen:hover{background:rgba(255,255,255,.08);color:var(--wh)}
+
+/* iframe container */
+.iframe-wrap{flex:1;position:relative;overflow:hidden;background:#070E18}
+.iframe-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+
+/* Coming soon state */
+.coming-soon{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px}
+.cs-icon{width:64px;height:64px;background:rgba(245,117,28,.06);border:1px solid rgba(245,117,28,.12);border-radius:16px;display:flex;align-items:center;justify-content:center}
+.cs-icon svg{width:28px;height:28px;stroke:var(--or);fill:none;stroke-width:1.5;stroke-linecap:round}
+.cs-title{font-size:20px;font-weight:700;color:var(--wh);letter-spacing:-.01em}
+.cs-sub{font-size:14px;color:rgba(237,243,248,.38);max-width:320px;text-align:center;line-height:1.7}
+.cs-cta{padding:10px 24px;background:var(--or);color:#fff;border-radius:100px;font-size:14px;font-weight:600;text-decoration:none;margin-top:4px;display:inline-block;transition:all .2s}
+.cs-cta:hover{opacity:.88}
+
+/* Loading state */
+.iframe-loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#070E18;pointer-events:none;transition:opacity .4s}
+.loading-inner{display:flex;flex-direction:column;align-items:center;gap:14px}
+.loading-dots{display:flex;gap:7px}
+.loading-dot{width:7px;height:7px;border-radius:50%;background:var(--or);animation:ldot 1.4s ease-in-out infinite}
+.loading-dot:nth-child(2){animation-delay:.2s}
+.loading-dot:nth-child(3){animation-delay:.4s}
+@keyframes ldot{0%,80%,100%{opacity:.2;transform:scale(.8)}40%{opacity:1;transform:scale(1)}}
+.loading-label{font-size:13px;color:rgba(237,243,248,.3)}
+
+@keyframes pdot{0%,100%{opacity:1}50%{opacity:.3}}
+.pulse{animation:pdot 2s ease-in-out infinite}
+</style>
+</head>
+<body>
+
+<div class="aurora">
+  <div class="ab ab1"></div>
+  <div class="ab ab2"></div>
+</div>
+
+<div class="shell">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <a href="index.html" class="topbar-logo"><span>Total</span>Brokerage</a>
+    <div class="topbar-right">
+      <a href="index.html" class="topbar-back">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        Back to site
+      </a>
+      <a href="book-a-demo.html" class="topbar-cta">Book a Demo</a>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="sidebar-label">Core platform</div>
+
+      <button class="feature-btn active" data-id="tx" onclick="selectFeature(this)">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </div>
+        <div class="feat-info">
+          <div class="feat-name">Transaction Management</div>
+          <div class="feat-desc">Every deal, one place</div>
+        </div>
+        <span class="live-badge">Live</span>
+      </button>
+
+      <button class="feature-btn" data-id="compliance" onclick="selectFeature(this)">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        </div>
+        <div class="feat-info">
+          <div class="feat-name">Compliance</div>
+          <div class="feat-desc">Automated checklists</div>
+        </div>
+        <span class="live-badge">Live</span>
+      </button>
+
+      <button class="feature-btn" data-id="commissions" onclick="selectFeature(this)">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+        </div>
+        <div class="feat-info">
+          <div class="feat-name">Commissions</div>
+          <div class="feat-desc">Splits & payouts</div>
+        </div>
+        <span class="live-badge">Live</span>
+      </button>
+
+      <button class="feature-btn" data-id="reporting" onclick="selectFeature(this)">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div class="feat-info">
+          <div class="feat-name">Reporting</div>
+          <div class="feat-desc">Real-time dashboards</div>
+        </div>
+        <span class="live-badge">Live</span>
+      </button>
+
+      <div class="sidebar-label">Agent tools</div>
+
+      <button class="feature-btn" data-id="agent-mgmt" onclick="selectFeature(this)">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <div class="feat-info">
+          <div class="feat-name">Agent Management</div>
+          <div class="feat-desc">Onboarding & licensing</div>
+        </div>
+        <span class="soon-badge">Soon</span>
+      </button>
+
+      <button class="feature-btn" data-id="agent-payouts" onclick="selectFeature(this)">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        </div>
+        <div class="feat-info">
+          <div class="feat-name">Agent Payouts</div>
+          <div class="feat-desc">Accurate disbursements</div>
+        </div>
+        <span class="soon-badge">Soon</span>
+      </button>
+
+      <button class="feature-btn" data-id="agent-billing" onclick="selectFeature(this)">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+        </div>
+        <div class="feat-info">
+          <div class="feat-name">Agent Billing</div>
+          <div class="feat-desc">Automated invoicing</div>
+        </div>
+        <span class="soon-badge">Soon</span>
+      </button>
+
+      <div class="sidebar-label">Integrations</div>
+
+      <button class="feature-btn" data-id="esig" onclick="selectFeature(this)">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
+        <div class="feat-info">
+          <div class="feat-name">E-Signature</div>
+          <div class="feat-desc">Native signing</div>
+        </div>
+        <span class="soon-badge">Soon</span>
+      </button>
+
+      <button class="feature-btn" data-id="deal-sync" onclick="selectFeature(this)">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24"><path d="M8 7h12M8 12h12M8 17h12M3 7l1 1-1 1M3 12l1 1-1 1M3 17l1 1-1 1"/></svg>
+        </div>
+        <div class="feat-info">
+          <div class="feat-name">Deal Sync</div>
+          <div class="feat-desc">MLS & tool sync</div>
+        </div>
+        <span class="soon-badge">Soon</span>
+      </button>
+
+      <button class="feature-btn" data-id="api" onclick="selectFeature(this)">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <div class="feat-info">
+          <div class="feat-name">API & Zapier</div>
+          <div class="feat-desc">Connect anything</div>
+        </div>
+        <span class="soon-badge">Soon</span>
+      </button>
+    </div>
+
+    <!-- DEMO AREA -->
+    <div class="demo-area">
+      <div class="demo-header">
+        <div class="demo-breadcrumb">TotalBrokerage <span>›</span> <span id="breadcrumb-name">Transaction Management</span></div>
+        <div class="demo-actions">
+          <button class="demo-fullscreen" onclick="openFullscreen()">Open full screen ↗</button>
+        </div>
+      </div>
+
+      <div class="iframe-wrap" id="iframe-wrap">
+        <!-- Loading indicator -->
+        <div class="iframe-loading" id="loading">
+          <div class="loading-inner">
+            <div class="loading-dots">
+              <div class="loading-dot"></div>
+              <div class="loading-dot"></div>
+              <div class="loading-dot"></div>
+            </div>
+            <div class="loading-label">Loading demo...</div>
+          </div>
+        </div>
+
+        <!-- Live demo iframe -->
+        <iframe id="demo-iframe" src="" title="TotalBrokerage interactive demo" allow="clipboard-write" allowfullscreen></iframe>
+
+        <!-- Coming soon overlay -->
+        <div class="coming-soon" id="coming-soon" style="display:none">
+          <div class="cs-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div class="cs-title">Demo coming soon</div>
+          <div class="cs-sub" id="cs-sub">This interactive walkthrough is currently being built. Book a demo to see it live with one of our team members.</div>
+          <a href="book-a-demo.html" class="cs-cta">Book a live demo →</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const DEMOS = {
+  tx: { id: "cmgjnryl31vgqkrn9u1", name: "Transaction Management", live: true },
+  compliance: { id: "cmgkzl8te314ukrn9ti", name: "Compliance", live: true },
+  commissions: { id: "cmgl0fcil08eoxu0hj2", name: "Commissions & Financials", live: true },
+  reporting: { id: "cmgpjgihq137w12sx35", name: "Reporting", live: true },
+  "agent-mgmt": { name: "Agent Management", live: false },
+  "agent-payouts": { name: "Agent Payouts", live: false },
+  "agent-billing": { name: "Agent Billing", live: false },
+  esig: { name: "E-Signature", live: false },
+  "deal-sync": { name: "Deal Sync", live: false },
+  api: { name: "API & Zapier", live: false }
+};
+
+let currentId = "tx";
+
+function selectFeature(btn) {
+  document.querySelectorAll(".feature-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  const id = btn.dataset.id;
+  currentId = id;
+  loadDemo(id);
+}
+
+function loadDemo(id) {
+  const demo = DEMOS[id];
+  const iframe = document.getElementById("demo-iframe");
+  const loading = document.getElementById("loading");
+  const comingSoon = document.getElementById("coming-soon");
+  const breadcrumb = document.getElementById("breadcrumb-name");
+
+  breadcrumb.textContent = demo.name;
+
+  if (demo.live) {
+    comingSoon.style.display = "none";
+    loading.style.opacity = "1";
+    loading.style.pointerEvents = "auto";
+    iframe.style.display = "block";
+
+    iframe.onload = () => {
+      loading.style.opacity = "0";
+      loading.style.pointerEvents = "none";
+    };
+
+    iframe.src = "https://app.supademo.com/embed/" + demo.id;
+  } else {
+    iframe.style.display = "none";
+    iframe.src = "";
+    loading.style.opacity = "0";
+    comingSoon.style.display = "flex";
+    document.getElementById("cs-sub").textContent =
+      "An interactive walkthrough for " + demo.name + " is coming soon. Book a demo to see it live with our team.";
+  }
+}
+
+function openFullscreen() {
+  const demo = DEMOS[currentId];
+  if (demo && demo.live) {
+    window.open("https://app.supademo.com/embed/" + demo.id, "_blank");
+  } else {
+    window.open("book-a-demo.html", "_self");
+  }
+}
+
+// Load initial demo
+loadDemo("tx");
+</script>
+
+<div id="pb" style="position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(27,77,104,.95);color:#EDF3F8;padding:10px 24px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(12px);font-size:12px;font-weight:500;border-top:1px solid rgba(43,123,174,.3)">
+  <span>🔧 <strong>TotalBrokerage Redesign</strong> &nbsp;|&nbsp; <a href="start-here.html" style="color:#F5751C;text-decoration:none;font-weight:600">All pages</a> &nbsp;·&nbsp; <a href="index.html" style="color:rgba(237,243,248,.5);text-decoration:none">Homepage</a></span>
+  <button onclick="document.getElementById('pb').style.display='none'" style="background:rgba(255,255,255,.12);border:none;color:#EDF3F8;width:22px;height:22px;border-radius:50%;cursor:pointer;font-size:14px">×</button>
+</div>
+</body>
+</html>
