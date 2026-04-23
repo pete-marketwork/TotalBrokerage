@@ -11,9 +11,11 @@ html,body{background:#070E18;color:#EDF3F8;font-family:'Outfit',sans-serif;heigh
 
 :root{
   --bg:#070E18;--s1:#0C1825;--s2:#101F30;
-  --teal:#1B4D68;--tb:#3A9AD4;--or:#F5751C;
+  --teal:#1B4D68;--tb:#3A9AD4;--or:#E8863A;
   --og:rgba(245,117,28,0.10);--wh:#EDF3F8;--mu:#607D92;
-  --bd:rgba(255,255,255,0.07);--bd2:rgba(255,255,255,0.04)
+  --bd:rgba(255,255,255,0.07);--bd2:rgba(255,255,255,0.04);
+  --purple:#5B4FD6;--purple-light:#7B71E8;--purple-bg:#F0EEFF;
+  --purple-bg2:#E8E5FF;
 }
 
 /* Aurora */
@@ -80,29 +82,6 @@ html,body{background:#070E18;color:#EDF3F8;font-family:'Outfit',sans-serif;heigh
 
 /* Demo viewer */
 .demo-viewer{flex:1;position:relative;overflow:hidden;background:#070E18;display:flex;flex-direction:column}
-.demo-screen{flex:1;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:20px}
-.demo-screen img{max-width:100%;max-height:100%;object-fit:contain;border-radius:10px;box-shadow:0 8px 40px rgba(0,0,0,.5);transition:opacity .35s ease}
-.demo-screen img.fade{opacity:0}
-
-/* Tooltip overlay */
-.demo-tooltip{position:absolute;bottom:100px;left:50%;transform:translateX(-50%);background:var(--or);color:#fff;padding:14px 22px;border-radius:14px;font-size:14px;font-weight:500;line-height:1.5;max-width:380px;text-align:center;box-shadow:0 6px 24px rgba(245,117,28,.35);animation:tooltipIn .4s ease .2s both}
-@keyframes tooltipIn{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
-
-/* Step counter */
-.demo-step-label{font-size:12px;color:rgba(237,243,248,.4);font-weight:500}
-
-/* Controls bar */
-.demo-controls{display:flex;align-items:center;justify-content:center;gap:16px;padding:16px 24px;border-top:1px solid var(--bd);background:rgba(10,18,30,.5);flex-shrink:0}
-.demo-nav-btn{width:38px;height:38px;border-radius:50%;border:1px solid var(--bd);background:rgba(255,255,255,.04);color:rgba(237,243,248,.5);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;font-family:'Outfit',sans-serif}
-.demo-nav-btn:hover:not(:disabled){background:rgba(255,255,255,.1);color:var(--wh);border-color:rgba(255,255,255,.15)}
-.demo-nav-btn:disabled{opacity:.25;cursor:default}
-.demo-nav-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-
-/* Progress dots */
-.demo-dots{display:flex;gap:8px;align-items:center}
-.demo-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.12);transition:all .25s;cursor:pointer}
-.demo-dot.active{background:var(--or);box-shadow:0 0 8px rgba(245,117,28,.4);transform:scale(1.2)}
-.demo-dot:hover:not(.active){background:rgba(255,255,255,.25)}
 
 /* Coming soon state */
 .coming-soon{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px}
@@ -112,6 +91,132 @@ html,body{background:#070E18;color:#EDF3F8;font-family:'Outfit',sans-serif;heigh
 .cs-sub{font-size:14px;color:rgba(237,243,248,.38);max-width:320px;text-align:center;line-height:1.7}
 .cs-cta{padding:10px 24px;background:var(--or);color:#fff;border-radius:100px;font-size:14px;font-weight:600;text-decoration:none;margin-top:4px;display:inline-block;transition:all .2s}
 .cs-cta:hover{opacity:.88}
+
+/* ===== MOCK BROWSER & WIZARD STYLES ===== */
+.mock-browser-wrap{flex:1;display:flex;align-items:center;justify-content:center;padding:24px;overflow:hidden}
+.mock-browser{width:100%;max-width:960px;height:100%;max-height:640px;background:#fff;border-radius:12px;box-shadow:0 12px 60px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.06);display:flex;flex-direction:column;overflow:hidden;position:relative}
+.mock-titlebar{height:38px;background:#2A2A3A;display:flex;align-items:center;padding:0 14px;gap:8px;flex-shrink:0;border-radius:12px 12px 0 0}
+.mock-dot{width:10px;height:10px;border-radius:50%}
+.mock-dot.red{background:#FF5F57}
+.mock-dot.yellow{background:#FEBC2E}
+.mock-dot.green{background:#28C840}
+.mock-titlebar-text{flex:1;text-align:center;font-size:12px;color:rgba(255,255,255,.45);font-weight:500;margin-right:40px}
+.mock-body{flex:1;overflow-y:auto;position:relative;background:#F5F6FA}
+
+/* Screen transitions */
+.wizard-screen{position:absolute;inset:0;overflow-y:auto;opacity:0;transform:translateX(30px);transition:all .4s ease;pointer-events:none;background:#F5F6FA}
+.wizard-screen.active{opacity:1;transform:translateX(0);pointer-events:all}
+.wizard-screen.exit-left{opacity:0;transform:translateX(-30px)}
+
+/* Wizard chrome */
+.wiz-breadcrumb{font-size:12px;color:#888;padding:14px 28px 0}
+.wiz-breadcrumb a{color:var(--purple);text-decoration:none}
+.wiz-breadcrumb span{color:#aaa;margin:0 4px}
+.wiz-progress-bar{height:4px;background:#E8E5FF;margin:14px 28px 0;border-radius:4px;overflow:hidden}
+.wiz-progress-fill{height:100%;background:var(--purple);border-radius:4px;transition:width .6s ease}
+.wiz-section-header{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--purple);padding:18px 28px 0}
+.wiz-back-btn{display:inline-flex;align-items:center;gap:4px;font-size:13px;color:var(--purple);background:none;border:none;cursor:default;padding:8px 28px 0;font-family:'Outfit',sans-serif}
+.wiz-heading{font-size:22px;font-weight:700;color:#1E1E2F;padding:6px 28px 0;line-height:1.3}
+.wiz-subtext{font-size:14px;color:#666;padding:4px 28px 0;line-height:1.6}
+.wiz-content{padding:18px 28px 28px}
+
+/* Purple buttons */
+.wiz-btn-primary{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;background:var(--purple);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;font-family:'Outfit',sans-serif;position:relative}
+.wiz-btn-primary:hover{background:var(--purple-light)}
+.wiz-btn-outlined{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;background:#fff;color:var(--purple);border:2px solid var(--purple);border-radius:8px;font-size:14px;font-weight:600;cursor:default;transition:all .2s;font-family:'Outfit',sans-serif}
+
+/* Orange tooltip */
+.wiz-tooltip{position:absolute;background:var(--or);color:#fff;padding:10px 16px;border-radius:10px;font-size:13px;font-weight:500;line-height:1.4;max-width:300px;text-align:center;box-shadow:0 4px 20px rgba(232,134,58,.35);z-index:20;opacity:0;animation:wizTooltipIn .5s ease .4s forwards;pointer-events:none}
+.wiz-tooltip::after{content:'';position:absolute;width:0;height:0;border:8px solid transparent}
+.wiz-tooltip.arrow-bottom::after{border-top-color:var(--or);bottom:-16px;left:50%;transform:translateX(-50%)}
+.wiz-tooltip.arrow-top::after{border-bottom-color:var(--or);top:-16px;left:50%;transform:translateX(-50%)}
+.wiz-tooltip.arrow-left::after{border-right-color:var(--or);left:-16px;top:50%;transform:translateY(-50%)}
+@keyframes wizTooltipIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* Pulsing ring */
+.pulse-ring{position:relative}
+.pulse-ring::before{content:'';position:absolute;inset:-4px;border-radius:12px;border:2px solid var(--or);animation:pulseRing 1.5s ease-in-out infinite;pointer-events:none}
+.pulse-ring::after{content:'';position:absolute;top:-6px;right:-6px;width:10px;height:10px;background:var(--or);border-radius:50%;animation:pulseDot 1.5s ease-in-out infinite;pointer-events:none}
+@keyframes pulseRing{0%,100%{opacity:.3;transform:scale(1)}50%{opacity:.8;transform:scale(1.04)}}
+@keyframes pulseDot{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.3)}}
+
+/* ===== SCREEN 1 - DASHBOARD ===== */
+.dash-header{display:flex;align-items:center;justify-content:space-between;padding:18px 28px 10px}
+.dash-header-left{display:flex;align-items:center;gap:12px}
+.dash-title{font-size:20px;font-weight:700;color:#1E1E2F}
+.dash-badge{font-size:11px;font-weight:600;background:var(--purple-bg);color:var(--purple);padding:3px 10px;border-radius:100px}
+.dash-banner{margin:0 28px 20px;background:linear-gradient(135deg,#E8E5FF 0%,#D5D0FF 100%);border-radius:14px;padding:24px 28px;position:relative;overflow:hidden}
+.dash-banner::after{content:'';position:absolute;right:-20px;top:-20px;width:120px;height:120px;background:rgba(91,79,214,.12);border-radius:50%}
+.dash-banner h2{font-size:22px;font-weight:700;color:#1E1E2F;margin-bottom:4px}
+.dash-banner p{font-size:14px;color:#555;margin-bottom:8px}
+.dash-banner a{font-size:13px;color:var(--purple);font-weight:600;text-decoration:none}
+.dash-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:0 28px 28px}
+.dash-card{background:#fff;border:1px solid #E5E5EF;border-radius:14px;padding:24px 20px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px;transition:box-shadow .2s}
+.dash-card-icon{width:48px;height:48px;background:var(--purple-bg);border-radius:12px;display:flex;align-items:center;justify-content:center}
+.dash-card-icon svg{width:22px;height:22px}
+.dash-card-title{font-size:14px;font-weight:600;color:#1E1E2F}
+.dash-card .wiz-btn-primary,.dash-card .wiz-btn-outlined{width:100%;justify-content:center;font-size:13px;padding:10px 16px}
+.dash-card-check{display:flex;align-items:center;gap:6px;font-size:12px;color:#888}
+.dash-card-check input{accent-color:var(--purple)}
+
+/* ===== SCREEN 2 - DOCUMENTS ===== */
+.doc-buttons{display:flex;gap:12px;flex-wrap:wrap;margin-top:6px}
+.doc-buttons .wiz-btn-primary{flex:1;min-width:160px;justify-content:center;text-align:center}
+.doc-info-box{margin-top:20px;background:linear-gradient(135deg,#F9F8FF,#F0EEFF);border:1px solid #E0DDFF;border-radius:12px;padding:18px 22px;display:flex;gap:12px;align-items:flex-start}
+.doc-info-box .info-icon{font-size:20px;flex-shrink:0;margin-top:2px}
+.doc-info-box .info-text{font-size:13px;color:#444;line-height:1.7}
+.doc-info-box .info-text strong{color:#1E1E2F}
+
+/* ===== SCREEN 3 - UPLOAD ===== */
+.upload-terms{border:2px solid var(--purple);border-radius:12px;padding:16px 20px;font-size:12px;color:#555;line-height:1.7;background:#FAFAFF;margin-bottom:16px;max-height:100px;overflow-y:auto}
+.upload-check{display:flex;align-items:center;gap:8px;font-size:13px;color:#444;margin-bottom:20px}
+.upload-check input{accent-color:var(--purple);width:16px;height:16px}
+.upload-dropzone{border:2px dashed #C5C0F0;border-radius:14px;padding:40px 20px;text-align:center;background:#FAFAFF;cursor:pointer;transition:all .2s;position:relative}
+.upload-dropzone:hover{border-color:var(--purple);background:#F4F2FF}
+.upload-dropzone-icon{width:52px;height:52px;margin:0 auto 14px;background:var(--purple-bg);border-radius:14px;display:flex;align-items:center;justify-content:center}
+.upload-dropzone-icon svg{width:24px;height:24px;stroke:var(--purple);fill:none;stroke-width:1.8}
+.upload-dropzone-text{font-size:15px;color:#444;font-weight:500}
+.upload-dropzone-text a{color:var(--purple);font-weight:600;text-decoration:none}
+.upload-device{display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-size:12px;color:#888;background:#fff;border:1px solid #E5E5EF;padding:6px 14px;border-radius:8px}
+
+/* ===== SCREEN 4 - PROCESSING ===== */
+.processing-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:50px 28px;text-align:center;min-height:340px}
+.processing-icon{width:100px;height:100px;margin-bottom:24px;position:relative}
+.processing-icon svg{width:100px;height:100px}
+.processing-spinner{position:absolute;inset:-8px;border:3px solid transparent;border-top:3px solid var(--purple);border-radius:50%;animation:spin 1.2s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.processing-text{font-size:16px;color:#555;line-height:1.7;max-width:400px}
+
+/* ===== SCREEN 5 - REVIEW ===== */
+.review-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.review-card{background:#fff;border:1px solid #E5E5EF;border-radius:12px;padding:18px;transition:box-shadow .2s}
+.review-card:hover{box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.review-card-label{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--purple);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.review-card-label svg{width:14px;height:14px;stroke:var(--purple);fill:none;stroke-width:2}
+.review-card-value{font-size:13px;color:#333;line-height:1.7}
+.review-card-value .label{color:#888;font-size:12px}
+.review-table{width:100%;border-collapse:collapse}
+.review-table td{padding:5px 0;font-size:13px;border-bottom:1px solid #F0F0F0}
+.review-table td:first-child{color:#888;font-size:12px}
+.review-table td:last-child{text-align:right;font-weight:600;color:#1E1E2F}
+.review-table tr:last-child td{border-bottom:none}
+.review-actions{display:flex;gap:12px;margin-top:22px;justify-content:flex-end}
+.review-actions .wiz-btn-outlined{cursor:default}
+
+/* Success overlay */
+.success-overlay{position:absolute;inset:0;background:rgba(255,255,255,.97);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:30;opacity:0;pointer-events:none;transition:opacity .4s}
+.success-overlay.show{opacity:1;pointer-events:all}
+.success-check{width:72px;height:72px;background:#E8FFE8;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:18px;animation:successPop .4s ease}
+.success-check svg{width:36px;height:36px;stroke:#22C55E;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+@keyframes successPop{0%{transform:scale(0)}60%{transform:scale(1.15)}100%{transform:scale(1)}}
+.success-title{font-size:22px;font-weight:700;color:#1E1E2F;margin-bottom:6px}
+.success-sub{font-size:14px;color:#666;margin-bottom:20px}
+
+/* Step indicator (bottom bar inside mock browser) */
+.mock-footer{height:40px;background:#fff;border-top:1px solid #E5E5EF;display:flex;align-items:center;justify-content:center;gap:8px;flex-shrink:0}
+.mock-step-dot{width:8px;height:8px;border-radius:50%;background:#E0DDF0;transition:all .3s}
+.mock-step-dot.active{background:var(--purple);transform:scale(1.25)}
+.mock-step-label{font-size:11px;color:#999;margin-left:8px;font-weight:500}
 </style>
 </head>
 <body>
@@ -260,27 +365,274 @@ html,body{background:#070E18;color:#EDF3F8;font-family:'Outfit',sans-serif;heigh
     <!-- DEMO AREA -->
     <div class="demo-area">
       <div class="demo-header">
-        <div class="demo-breadcrumb">TotalBrokerage <span>›</span> <span id="breadcrumb-name">Transaction Management</span></div>
+        <div class="demo-breadcrumb">TotalBrokerage <span>&#8250;</span> <span id="breadcrumb-name">Transaction Management</span></div>
         <div class="demo-actions">
-          <button class="demo-fullscreen" onclick="openFullscreen()">Open full screen ↗</button>
+          <span style="font-size:11px;color:rgba(237,243,248,.3);margin-right:4px" id="step-hint">Click highlighted elements to advance</span>
         </div>
       </div>
 
       <div class="demo-viewer" id="demo-viewer">
-        <!-- Live demo viewer -->
-        <div class="demo-screen" id="demo-screen">
-          <img id="demo-img" src="" alt="Demo step screenshot">
-          <div class="demo-tooltip" id="demo-tooltip"></div>
-        </div>
-        <div class="demo-controls" id="demo-controls">
-          <button class="demo-nav-btn" id="btn-prev" onclick="prevStep()">
-            <svg viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-          </button>
-          <div class="demo-dots" id="demo-dots"></div>
-          <span class="demo-step-label" id="step-label"></span>
-          <button class="demo-nav-btn" id="btn-next" onclick="nextStep()">
-            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </button>
+        <!-- Interactive wizard demo -->
+        <div class="mock-browser-wrap" id="demo-live" style="display:flex">
+          <div class="mock-browser">
+            <div class="mock-titlebar">
+              <div class="mock-dot red"></div>
+              <div class="mock-dot yellow"></div>
+              <div class="mock-dot green"></div>
+              <div class="mock-titlebar-text">TotalBrokerage Wizard</div>
+            </div>
+            <div class="mock-body" id="mock-body">
+
+              <!-- ========== SCREEN 1: DASHBOARD ========== -->
+              <div class="wizard-screen active" id="screen-1">
+                <div class="dash-header">
+                  <div class="dash-header-left">
+                    <div class="dash-title">Dashboard</div>
+                    <div class="dash-badge">Simple View</div>
+                  </div>
+                </div>
+                <div class="dash-banner">
+                  <h2>Welcome, Sarah!</h2>
+                  <p>You're viewing the agent dashboard.</p>
+                  <a href="javascript:void(0)">Full Dashboard &rarr;</a>
+                </div>
+                <div class="dash-cards">
+                  <!-- Card 1 - Clickable -->
+                  <div class="dash-card" style="position:relative">
+                    <div class="dash-card-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="#5B4FD6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    </div>
+                    <div class="dash-card-title">Quick Start</div>
+                    <button class="wiz-btn-primary pulse-ring" onclick="goToScreen(2)" id="btn-start-tx" style="width:100%;justify-content:center;font-size:13px;padding:10px 16px">Start New Transaction</button>
+                    <!-- Tooltip -->
+                    <div class="wiz-tooltip arrow-top" style="position:absolute;bottom:-58px;left:50%;transform:translateX(-50%);white-space:nowrap">To start off, click on "Start New Transaction".</div>
+                  </div>
+                  <!-- Card 2 -->
+                  <div class="dash-card">
+                    <div class="dash-card-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="#5B4FD6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+                    </div>
+                    <div class="dash-card-title">Manage Transactions</div>
+                    <button class="wiz-btn-primary" style="width:100%;justify-content:center;font-size:13px;padding:10px 16px;opacity:.7;cursor:default">Manage Existing Transactions</button>
+                  </div>
+                  <!-- Card 3 -->
+                  <div class="dash-card">
+                    <div class="dash-card-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="#5B4FD6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    </div>
+                    <div class="dash-card-title">Full Dashboard</div>
+                    <button class="wiz-btn-outlined" style="width:100%;justify-content:center;font-size:13px;padding:10px 16px">Full Dashboard</button>
+                    <div class="dash-card-check" style="margin-top:6px">
+                      <input type="checkbox" disabled> <span>Save this as default</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ========== SCREEN 2: DOCUMENTS ========== -->
+              <div class="wizard-screen" id="screen-2">
+                <div class="wiz-breadcrumb">
+                  <a href="javascript:void(0)">Home</a><span>/</span>
+                  <a href="javascript:void(0)">Transactions</a><span>/</span>
+                  Transaction Wizard
+                </div>
+                <div class="wiz-progress-bar"><div class="wiz-progress-fill" style="width:10%"></div></div>
+                <div class="wiz-section-header">Documents for the Transaction</div>
+                <div class="wiz-back-btn">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+                  Back
+                </div>
+                <div class="wiz-heading">Documents?</div>
+                <div class="wiz-subtext">Executed documents are PDFs that have already been signed.</div>
+                <div class="wiz-content">
+                  <div class="doc-buttons" style="position:relative">
+                    <button class="wiz-btn-primary pulse-ring" onclick="goToScreen(3)" id="btn-executed">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                      I have executed forms
+                    </button>
+                    <button class="wiz-btn-primary" style="opacity:.65;cursor:default">I need blank forms</button>
+                    <button class="wiz-btn-primary" style="opacity:.65;cursor:default">I do not need forms</button>
+                    <!-- Tooltip -->
+                    <div class="wiz-tooltip arrow-top" style="position:absolute;top:58px;left:110px;transform:translateX(-50%)">Click "I have executed forms".</div>
+                  </div>
+                  <div class="doc-info-box">
+                    <div class="info-icon">&#9889;</div>
+                    <div class="info-text">
+                      <strong>Manual Data Entry? Not Anymore.</strong><br>
+                      Our Automated Document Processor reads your transaction PDFs and auto-fills key details for you: names, dates, amounts, and more.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ========== SCREEN 3: UPLOAD ========== -->
+              <div class="wizard-screen" id="screen-3">
+                <div class="wiz-breadcrumb">
+                  <a href="javascript:void(0)">Home</a><span>/</span>
+                  <a href="javascript:void(0)">Transactions</a><span>/</span>
+                  Transaction Wizard
+                </div>
+                <div class="wiz-progress-bar"><div class="wiz-progress-fill" style="width:25%"></div></div>
+                <div class="wiz-section-header">Upload Executed Documents</div>
+                <div class="wiz-back-btn">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+                  Back
+                </div>
+                <div class="wiz-heading">Upload Files</div>
+                <div class="wiz-subtext">You can provide PDF files for this transaction.</div>
+                <div class="wiz-content" style="position:relative">
+                  <div class="upload-terms">
+                    By uploading documents, you represent and warrant that you have the legal right and authority to upload and share these documents through TotalBrokerage. You confirm that the documents do not violate any confidentiality agreements, privacy laws, or intellectual property rights. TotalBrokerage is not responsible for verifying the legality or accuracy of uploaded documents. All documents are processed in accordance with our Privacy Policy and Terms of Service.
+                  </div>
+                  <div class="upload-check">
+                    <input type="checkbox" checked disabled>
+                    <span>I have read, understand, and agree to the terms and conditions stated above.</span>
+                  </div>
+                  <div class="upload-dropzone pulse-ring" onclick="goToScreen(4)" id="upload-zone">
+                    <div class="upload-dropzone-icon">
+                      <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                    </div>
+                    <div class="upload-dropzone-text">Drop files here or <a href="javascript:void(0)">browse files</a></div>
+                    <div class="upload-device">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                      My Device
+                    </div>
+                  </div>
+                  <!-- Tooltip -->
+                  <div class="wiz-tooltip arrow-bottom" style="position:absolute;top:10px;right:30px">Drag and drop your executed contracts.</div>
+                </div>
+              </div>
+
+              <!-- ========== SCREEN 4: PROCESSING ========== -->
+              <div class="wizard-screen" id="screen-4">
+                <div class="wiz-breadcrumb">
+                  <a href="javascript:void(0)">Home</a><span>/</span>
+                  <a href="javascript:void(0)">Transactions</a><span>/</span>
+                  Transaction Wizard
+                </div>
+                <div class="wiz-progress-bar"><div class="wiz-progress-fill" style="width:40%"></div></div>
+                <div class="wiz-section-header">Upload Executed Documents</div>
+                <div class="processing-wrap" onclick="goToScreen(5)" style="cursor:pointer;position:relative" id="processing-area">
+                  <div class="processing-icon">
+                    <svg viewBox="0 0 100 100" fill="none">
+                      <rect x="25" y="8" width="50" height="65" rx="6" stroke="#5B4FD6" stroke-width="2.5" fill="#F0EEFF"/>
+                      <rect x="25" y="8" width="50" height="18" rx="6" fill="#5B4FD6"/>
+                      <line x1="35" y1="38" x2="65" y2="38" stroke="#C5C0F0" stroke-width="2.5" stroke-linecap="round"/>
+                      <line x1="35" y1="46" x2="58" y2="46" stroke="#C5C0F0" stroke-width="2.5" stroke-linecap="round"/>
+                      <line x1="35" y1="54" x2="62" y2="54" stroke="#C5C0F0" stroke-width="2.5" stroke-linecap="round"/>
+                      <line x1="35" y1="62" x2="50" y2="62" stroke="#C5C0F0" stroke-width="2.5" stroke-linecap="round"/>
+                      <!-- magnifying glass -->
+                      <circle cx="68" cy="70" r="14" stroke="#5B4FD6" stroke-width="2.5" fill="#fff"/>
+                      <line x1="78" y1="80" x2="88" y2="90" stroke="#5B4FD6" stroke-width="3" stroke-linecap="round"/>
+                      <path d="M62 68 L66 72 L74 64" stroke="#5B4FD6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    </svg>
+                    <div class="processing-spinner"></div>
+                  </div>
+                  <div class="processing-text">
+                    We're reading your documents to pre-fill your transaction.<br>
+                    <strong>You'll be able to continue shortly.</strong>
+                  </div>
+                  <!-- Tooltip -->
+                  <div class="wiz-tooltip arrow-top" style="position:relative;margin-top:24px">TotalBrokerage pulls data straight from the docs, no typing required.</div>
+                </div>
+              </div>
+
+              <!-- ========== SCREEN 5: REVIEW & CONFIRM ========== -->
+              <div class="wizard-screen" id="screen-5">
+                <div class="wiz-breadcrumb">
+                  <a href="javascript:void(0)">Home</a><span>/</span>
+                  <a href="javascript:void(0)">Transactions</a><span>/</span>
+                  Transaction Wizard
+                </div>
+                <div class="wiz-progress-bar"><div class="wiz-progress-fill" style="width:60%"></div></div>
+                <div class="wiz-section-header">Confirm Information about your Transaction</div>
+                <div class="wiz-heading">Review &amp; Confirm</div>
+                <div class="wiz-subtext">Double-check all details before creating the transaction. Click Edit Information if any changes are needed.</div>
+                <div class="wiz-content" style="position:relative">
+                  <div class="review-cards">
+                    <!-- Property -->
+                    <div class="review-card">
+                      <div class="review-card-label">
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                        Property Information
+                      </div>
+                      <div class="review-card-value">
+                        123 Maple Street<br>
+                        Anytown, PA 17101<br>
+                        United States<br><br>
+                        <span class="label">Legal Description:</span><br>
+                        ORANGE LOT 55
+                      </div>
+                    </div>
+                    <!-- Financial -->
+                    <div class="review-card">
+                      <div class="review-card-label">
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+                        Financial Information
+                      </div>
+                      <div class="review-card-value">
+                        <table class="review-table">
+                          <tr><td>Balance To Close</td><td>$12,500,000.00</td></tr>
+                          <tr><td>Initial Deposit</td><td>$500,000.00</td></tr>
+                          <tr><td>Sale Price</td><td>$15,000,000.00</td></tr>
+                        </table>
+                      </div>
+                    </div>
+                    <!-- Date -->
+                    <div class="review-card">
+                      <div class="review-card-label">
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                        Date Information
+                      </div>
+                      <div class="review-card-value">
+                        <table class="review-table">
+                          <tr><td>Closing Date</td><td>07/01/2025</td></tr>
+                        </table>
+                      </div>
+                    </div>
+                    <!-- Contacts -->
+                    <div class="review-card">
+                      <div class="review-card-label">
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        Contact Information
+                      </div>
+                      <div class="review-card-value">
+                        <span class="label">Buyers:</span><br>
+                        Jeff Bezos<br><br>
+                        <span class="label">Sellers:</span><br>
+                        David Hathaway
+                      </div>
+                    </div>
+                  </div>
+                  <div class="review-actions">
+                    <button class="wiz-btn-outlined">Edit Information</button>
+                    <button class="wiz-btn-primary pulse-ring" onclick="showSuccess()" id="btn-confirm">Confirm and Create Transaction</button>
+                  </div>
+                  <!-- Tooltip -->
+                  <div class="wiz-tooltip arrow-bottom" style="position:absolute;top:-8px;right:28px">Confirm the information is correct and you're done!</div>
+                </div>
+              </div>
+
+              <!-- SUCCESS OVERLAY -->
+              <div class="success-overlay" id="success-overlay">
+                <div class="success-check">
+                  <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div class="success-title">Transaction Created!</div>
+                <div class="success-sub">Your transaction has been successfully created and saved.</div>
+                <button class="wiz-btn-primary" onclick="resetWizard()" style="font-size:14px;padding:11px 28px">Back to Dashboard</button>
+              </div>
+
+            </div><!-- /mock-body -->
+            <div class="mock-footer">
+              <div class="mock-step-dot active" data-step="1"></div>
+              <div class="mock-step-dot" data-step="2"></div>
+              <div class="mock-step-dot" data-step="3"></div>
+              <div class="mock-step-dot" data-step="4"></div>
+              <div class="mock-step-dot" data-step="5"></div>
+              <div class="mock-step-label" id="mock-step-label">Step 1 of 5</div>
+            </div>
+          </div>
         </div>
 
         <!-- Coming soon overlay -->
@@ -290,7 +642,7 @@ html,body{background:#070E18;color:#EDF3F8;font-family:'Outfit',sans-serif;heigh
           </div>
           <div class="cs-title">Demo coming soon</div>
           <div class="cs-sub" id="cs-sub">This interactive walkthrough is currently being built. Book a demo to see it live with one of our team members.</div>
-          <a href="book-a-demo.html" class="cs-cta">Book a live demo →</a>
+          <a href="book-a-demo.html" class="cs-cta">Book a live demo &rarr;</a>
         </div>
       </div>
     </div>
@@ -300,17 +652,7 @@ html,body{background:#070E18;color:#EDF3F8;font-family:'Outfit',sans-serif;heigh
 
 <script>
 const DEMOS = {
-  tx: {
-    name: "Transaction Management",
-    live: true,
-    steps: [
-      { img: "images/demo-tx/step-1.png", tooltip: "To start off, click on \"Start New Transaction\"." },
-      { img: "images/demo-tx/step-2.png", tooltip: "Click \"I have executed forms\" to use the automated document processor." },
-      { img: "images/demo-tx/step-3.png", tooltip: "Drag and drop your executed contracts." },
-      { img: "images/demo-tx/step-4.png", tooltip: "TotalBrokerage pulls data straight from the docs, no typing required." },
-      { img: "images/demo-tx/step-5.png", tooltip: "Confirm the information is correct and you're done!" }
-    ]
-  },
+  tx: { name: "Transaction Management", live: true },
   compliance: { name: "Compliance", live: false },
   commissions: { name: "Commissions & Financials", live: false },
   reporting: { name: "Reporting", live: false },
@@ -322,114 +664,104 @@ const DEMOS = {
   api: { name: "API & Zapier", live: false }
 };
 
-let currentId = "tx";
-let currentStep = 0;
+let currentScreen = 1;
+let autoAdvanceTimer = null;
 
 function selectFeature(btn) {
   document.querySelectorAll(".feature-btn").forEach(b => b.classList.remove("active"));
   btn.classList.add("active");
-  currentId = btn.dataset.id;
-  currentStep = 0;
-  loadDemo(currentId);
-}
-
-function loadDemo(id) {
+  const id = btn.dataset.id;
   const demo = DEMOS[id];
-  const screen = document.getElementById("demo-screen");
-  const controls = document.getElementById("demo-controls");
-  const comingSoon = document.getElementById("coming-soon");
-  const breadcrumb = document.getElementById("breadcrumb-name");
+  document.getElementById("breadcrumb-name").textContent = demo.name;
 
-  breadcrumb.textContent = demo.name;
-
-  if (demo.live && demo.steps) {
-    comingSoon.style.display = "none";
-    screen.style.display = "flex";
-    controls.style.display = "flex";
-    buildDots(demo.steps.length);
-    showStep(0);
+  if (demo.live) {
+    document.getElementById("demo-live").style.display = "flex";
+    document.getElementById("coming-soon").style.display = "none";
+    document.getElementById("step-hint").style.display = "";
+    resetWizard();
   } else {
-    screen.style.display = "none";
-    controls.style.display = "none";
-    comingSoon.style.display = "flex";
+    document.getElementById("demo-live").style.display = "none";
+    document.getElementById("coming-soon").style.display = "flex";
+    document.getElementById("step-hint").style.display = "none";
     document.getElementById("cs-sub").textContent =
       "An interactive walkthrough for " + demo.name + " is coming soon. Book a demo to see it live with our team.";
   }
 }
 
-function buildDots(count) {
-  const container = document.getElementById("demo-dots");
-  container.innerHTML = "";
-  for (let i = 0; i < count; i++) {
-    const dot = document.createElement("div");
-    dot.className = "demo-dot" + (i === 0 ? " active" : "");
-    dot.onclick = () => showStep(i);
-    container.appendChild(dot);
-  }
+function goToScreen(num) {
+  if (autoAdvanceTimer) { clearTimeout(autoAdvanceTimer); autoAdvanceTimer = null; }
+
+  const prev = document.getElementById("screen-" + currentScreen);
+  const next = document.getElementById("screen-" + num);
+  if (!prev || !next) return;
+
+  // Remove any existing tooltips' animation so they re-trigger
+  prev.classList.remove("active");
+  prev.classList.add("exit-left");
+
+  setTimeout(() => {
+    prev.classList.remove("exit-left");
+    next.classList.add("active");
+    currentScreen = num;
+    updateStepDots();
+
+    // Auto-advance for screen 4 (processing)
+    if (num === 4) {
+      autoAdvanceTimer = setTimeout(() => goToScreen(5), 3000);
+    }
+  }, 350);
 }
 
-function showStep(idx) {
-  const demo = DEMOS[currentId];
-  if (!demo.steps) return;
-  currentStep = idx;
-  const step = demo.steps[idx];
+function updateStepDots() {
+  document.querySelectorAll(".mock-step-dot").forEach(dot => {
+    const step = parseInt(dot.dataset.step);
+    dot.classList.toggle("active", step === currentScreen);
+  });
+  document.getElementById("mock-step-label").textContent = "Step " + currentScreen + " of 5";
+}
 
-  const img = document.getElementById("demo-img");
-  const tooltip = document.getElementById("demo-tooltip");
+function showSuccess() {
+  const overlay = document.getElementById("success-overlay");
+  overlay.classList.add("show");
+}
 
-  // Fade transition
-  img.classList.add("fade");
-  setTimeout(() => {
-    img.src = step.img;
-    img.onload = () => img.classList.remove("fade");
-  }, 150);
+function resetWizard() {
+  if (autoAdvanceTimer) { clearTimeout(autoAdvanceTimer); autoAdvanceTimer = null; }
 
-  // Update tooltip
-  tooltip.style.animation = "none";
-  tooltip.offsetHeight; // reflow
-  tooltip.style.animation = "";
-  tooltip.textContent = step.tooltip;
+  const overlay = document.getElementById("success-overlay");
+  overlay.classList.remove("show");
 
-  // Update dots
-  document.querySelectorAll(".demo-dot").forEach((d, i) => {
-    d.classList.toggle("active", i === idx);
+  // Hide all screens
+  document.querySelectorAll(".wizard-screen").forEach(s => {
+    s.classList.remove("active", "exit-left");
   });
 
-  // Update label
-  document.getElementById("step-label").textContent = (idx + 1) + " / " + demo.steps.length;
-
-  // Update buttons
-  document.getElementById("btn-prev").disabled = idx === 0;
-  document.getElementById("btn-next").disabled = idx === demo.steps.length - 1;
+  // Show screen 1
+  currentScreen = 1;
+  setTimeout(() => {
+    document.getElementById("screen-1").classList.add("active");
+    updateStepDots();
+  }, 100);
 }
 
-function prevStep() {
-  if (currentStep > 0) showStep(currentStep - 1);
-}
-
-function nextStep() {
-  const demo = DEMOS[currentId];
-  if (demo.steps && currentStep < demo.steps.length - 1) showStep(currentStep + 1);
-}
-
-function openFullscreen() {
-  // No-op for now, or open book-a-demo
-  window.open("book-a-demo.html", "_self");
-}
-
-// Keyboard navigation
+// Keyboard support
 document.addEventListener("keydown", (e) => {
-  if (e.key === "ArrowRight" || e.key === "ArrowDown") nextStep();
-  if (e.key === "ArrowLeft" || e.key === "ArrowUp") prevStep();
+  if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+    if (currentScreen < 5) goToScreen(currentScreen + 1);
+    else showSuccess();
+  }
+  if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+    if (currentScreen > 1) goToScreen(currentScreen - 1);
+  }
 });
 
-// Load initial demo
-loadDemo("tx");
+// Init
+updateStepDots();
 </script>
 
 <div id="pb" style="position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(27,77,104,.95);color:#EDF3F8;padding:10px 24px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(12px);font-size:12px;font-weight:500;border-top:1px solid rgba(43,123,174,.3)">
-  <span>🔧 <strong>TotalBrokerage Redesign</strong> &nbsp;|&nbsp; <a href="start-here.html" style="color:#F5751C;text-decoration:none;font-weight:600">All pages</a> &nbsp;·&nbsp; <a href="index.html" style="color:rgba(237,243,248,.5);text-decoration:none">Homepage</a></span>
-  <button onclick="document.getElementById('pb').style.display='none'" style="background:rgba(255,255,255,.12);border:none;color:#EDF3F8;width:22px;height:22px;border-radius:50%;cursor:pointer;font-size:14px">×</button>
+  <span>&#128295; <strong>TotalBrokerage Redesign</strong> &nbsp;|&nbsp; <a href="start-here.html" style="color:#F5751C;text-decoration:none;font-weight:600">All pages</a> &nbsp;&middot;&nbsp; <a href="index.html" style="color:rgba(237,243,248,.5);text-decoration:none">Homepage</a></span>
+  <button onclick="document.getElementById('pb').style.display='none'" style="background:rgba(255,255,255,.12);border:none;color:#EDF3F8;width:22px;height:22px;border-radius:50%;cursor:pointer;font-size:14px">&times;</button>
 </div>
 </body>
 </html>
