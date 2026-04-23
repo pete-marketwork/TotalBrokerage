@@ -93,40 +93,56 @@ html,body{background:#070E18;color:#EDF3F8;font-family:'Outfit',sans-serif;heigh
 .cs-cta:hover{opacity:.88}
 
 /* ===== MOCK BROWSER & WIZARD STYLES ===== */
-.mock-browser-wrap{flex:1;display:flex;align-items:center;justify-content:center;padding:24px;overflow:hidden}
-.mock-browser{width:100%;max-width:960px;height:100%;max-height:640px;background:#fff;border-radius:12px;box-shadow:0 12px 60px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.06);display:flex;flex-direction:column;overflow:hidden;position:relative}
-.mock-titlebar{height:38px;background:#2A2A3A;display:flex;align-items:center;padding:0 14px;gap:8px;flex-shrink:0;border-radius:12px 12px 0 0}
+.mock-browser-wrap{flex:1;display:flex;align-items:center;justify-content:center;padding:24px;overflow:hidden;perspective:1200px}
+.mock-browser{width:100%;max-width:960px;height:100%;max-height:640px;background:rgba(255,255,255,.95);backdrop-filter:blur(20px);border-radius:12px;box-shadow:0 12px 60px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.1), 0 0 80px rgba(91,79,214,.08), inset 0 1px 0 rgba(255,255,255,.15);display:flex;flex-direction:column;overflow:hidden;position:relative;transition:transform .15s ease-out, box-shadow .15s ease-out;transform-style:preserve-3d;will-change:transform}
+.mock-titlebar{height:38px;background:linear-gradient(180deg,#35354a 0%,#2A2A3A 100%);display:flex;align-items:center;padding:0 14px;gap:8px;flex-shrink:0;border-radius:12px 12px 0 0;position:relative;overflow:hidden}
+.mock-titlebar::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.04) 50%,transparent 100%);pointer-events:none}
 .mock-dot{width:10px;height:10px;border-radius:50%}
-.mock-dot.red{background:#FF5F57}
-.mock-dot.yellow{background:#FEBC2E}
-.mock-dot.green{background:#28C840}
+.mock-dot.red{background:#FF5F57;box-shadow:0 0 6px rgba(255,95,87,.4)}
+.mock-dot.yellow{background:#FEBC2E;box-shadow:0 0 6px rgba(254,188,46,.4)}
+.mock-dot.green{background:#28C840;box-shadow:0 0 6px rgba(40,200,64,.4)}
 .mock-titlebar-text{flex:1;text-align:center;font-size:12px;color:rgba(255,255,255,.45);font-weight:500;margin-right:40px}
 .mock-body{flex:1;overflow-y:auto;position:relative;background:#F5F6FA}
 
-/* Screen transitions */
-.wizard-screen{position:absolute;inset:0;overflow-y:auto;opacity:0;transform:translateX(30px);transition:all .4s ease;pointer-events:none;background:#F5F6FA}
-.wizard-screen.active{opacity:1;transform:translateX(0);pointer-events:all}
-.wizard-screen.exit-left{opacity:0;transform:translateX(-30px)}
+/* Micro-particles canvas */
+#micro-particles{position:absolute;inset:0;pointer-events:none;z-index:1}
+
+/* Screen transitions - zoom/blur effect */
+.wizard-screen{position:absolute;inset:0;overflow-y:auto;opacity:0;transform:scale(0.92);filter:blur(6px);transition:all .5s cubic-bezier(.4,0,.2,1);pointer-events:none;background:#F5F6FA;z-index:2}
+.wizard-screen.active{opacity:1;transform:scale(1);filter:blur(0);pointer-events:all}
+.wizard-screen.exit-zoom{opacity:0;transform:scale(0.88);filter:blur(8px)}
 
 /* Wizard chrome */
 .wiz-breadcrumb{font-size:12px;color:#888;padding:14px 28px 0}
 .wiz-breadcrumb a{color:var(--purple);text-decoration:none}
 .wiz-breadcrumb span{color:#aaa;margin:0 4px}
-.wiz-progress-bar{height:4px;background:#E8E5FF;margin:14px 28px 0;border-radius:4px;overflow:hidden}
-.wiz-progress-fill{height:100%;background:var(--purple);border-radius:4px;transition:width .6s ease}
+.wiz-progress-bar{height:4px;background:#E8E5FF;margin:14px 28px 0;border-radius:4px;overflow:hidden;position:relative}
+.wiz-progress-fill{height:100%;background:var(--purple);border-radius:4px;transition:width .6s ease;position:relative}
+.wiz-progress-fill::after{content:'';position:absolute;right:0;top:-3px;width:16px;height:10px;background:radial-gradient(ellipse,rgba(123,113,232,.9) 0%,rgba(91,79,214,.4) 40%,transparent 70%);border-radius:50%;animation:progressGlow 1.5s ease-in-out infinite;filter:blur(1px)}
+@keyframes progressGlow{0%,100%{opacity:.5;transform:scaleX(1)}50%{opacity:1;transform:scaleX(1.5)}}
+/* shimmer trail on progress bar */
+.wiz-progress-fill::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.3) 50%,transparent 100%);animation:progressShimmer 2s ease-in-out infinite}
+@keyframes progressShimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+
 .wiz-section-header{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--purple);padding:18px 28px 0}
 .wiz-back-btn{display:inline-flex;align-items:center;gap:4px;font-size:13px;color:var(--purple);background:none;border:none;cursor:default;padding:8px 28px 0;font-family:'Outfit',sans-serif}
 .wiz-heading{font-size:22px;font-weight:700;color:#1E1E2F;padding:6px 28px 0;line-height:1.3}
 .wiz-subtext{font-size:14px;color:#666;padding:4px 28px 0;line-height:1.6}
 .wiz-content{padding:18px 28px 28px}
 
-/* Purple buttons */
-.wiz-btn-primary{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;background:var(--purple);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;font-family:'Outfit',sans-serif;position:relative}
-.wiz-btn-primary:hover{background:var(--purple-light)}
+/* Purple buttons with gradient shine sweep */
+.wiz-btn-primary{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;background:var(--purple);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;font-family:'Outfit',sans-serif;position:relative;overflow:hidden}
+.wiz-btn-primary::before{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);transition:none;pointer-events:none}
+.wiz-btn-primary:hover::before{animation:btnShine .6s ease forwards}
+.wiz-btn-primary:hover{background:var(--purple-light);transform:scale(1.03)}
+@keyframes btnShine{0%{left:-100%}100%{left:150%}}
 .wiz-btn-outlined{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;background:#fff;color:var(--purple);border:2px solid var(--purple);border-radius:8px;font-size:14px;font-weight:600;cursor:default;transition:all .2s;font-family:'Outfit',sans-serif}
 
-/* Orange tooltip */
-.wiz-tooltip{position:absolute;background:var(--or);color:#fff;padding:10px 16px;border-radius:10px;font-size:13px;font-weight:500;line-height:1.4;max-width:300px;text-align:center;box-shadow:0 4px 20px rgba(232,134,58,.35);z-index:20;opacity:0;animation:wizTooltipIn .5s ease .4s forwards;pointer-events:none}
+/* Orange tooltip with typewriter */
+.wiz-tooltip{position:absolute;background:var(--or);color:#fff;padding:10px 16px;border-radius:10px;font-size:13px;font-weight:500;line-height:1.4;max-width:300px;text-align:center;box-shadow:0 4px 20px rgba(232,134,58,.35);z-index:20;opacity:0;animation:wizTooltipIn .5s ease .6s forwards;pointer-events:none}
+.wiz-tooltip .tt-text{display:inline}
+.wiz-tooltip .tt-cursor{display:inline-block;width:2px;height:13px;background:#fff;margin-left:1px;vertical-align:middle;animation:ttBlink .5s step-end infinite}
+@keyframes ttBlink{0%,100%{opacity:1}50%{opacity:0}}
 .wiz-tooltip::after{content:'';position:absolute;width:0;height:0;border:8px solid transparent}
 .wiz-tooltip.arrow-bottom::after{border-top-color:var(--or);bottom:-16px;left:50%;transform:translateX(-50%)}
 .wiz-tooltip.arrow-top::after{border-bottom-color:var(--or);top:-16px;left:50%;transform:translateX(-50%)}
@@ -139,6 +155,19 @@ html,body{background:#070E18;color:#EDF3F8;font-family:'Outfit',sans-serif;heigh
 .pulse-ring::after{content:'';position:absolute;top:-6px;right:-6px;width:10px;height:10px;background:var(--or);border-radius:50%;animation:pulseDot 1.5s ease-in-out infinite;pointer-events:none}
 @keyframes pulseRing{0%,100%{opacity:.3;transform:scale(1)}50%{opacity:.8;transform:scale(1.04)}}
 @keyframes pulseDot{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.3)}}
+
+/* Click ripple */
+.click-ripple{position:fixed;pointer-events:none;z-index:9999;border-radius:50%;border:2px solid var(--or);animation:rippleExpand .6s ease-out forwards}
+@keyframes rippleExpand{0%{width:0;height:0;opacity:.8;transform:translate(-50%,-50%)}100%{width:120px;height:120px;opacity:0;transform:translate(-50%,-50%)}}
+.click-ripple-inner{position:fixed;pointer-events:none;z-index:9999;border-radius:50%;background:rgba(232,134,58,.15);animation:rippleExpandInner .5s ease-out forwards}
+@keyframes rippleExpandInner{0%{width:0;height:0;opacity:.6;transform:translate(-50%,-50%)}100%{width:80px;height:80px;opacity:0;transform:translate(-50%,-50%)}}
+
+/* Fake cursor */
+#fake-cursor{position:absolute;z-index:50;pointer-events:none;opacity:0;transition:opacity .3s;will-change:transform}
+#fake-cursor .cursor-dot{width:18px;height:18px;border-radius:50%;border:2px solid var(--or);background:rgba(232,134,58,.15);position:relative}
+#fake-cursor .cursor-dot::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:1.5px solid rgba(232,134,58,.3);animation:cursorPulse 1.2s ease-in-out infinite}
+@keyframes cursorPulse{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.4);opacity:0}}
+#fake-cursor .cursor-trail{position:absolute;top:50%;left:50%;width:6px;height:6px;border-radius:50%;background:rgba(232,134,58,.4);transform:translate(-50%,-50%);filter:blur(2px)}
 
 /* ===== SCREEN 1 - DASHBOARD ===== */
 .dash-header{display:flex;align-items:center;justify-content:space-between;padding:18px 28px 10px}
@@ -171,7 +200,7 @@ html,body{background:#070E18;color:#EDF3F8;font-family:'Outfit',sans-serif;heigh
 .upload-terms{border:2px solid var(--purple);border-radius:12px;padding:16px 20px;font-size:12px;color:#555;line-height:1.7;background:#FAFAFF;margin-bottom:16px;max-height:100px;overflow-y:auto}
 .upload-check{display:flex;align-items:center;gap:8px;font-size:13px;color:#444;margin-bottom:20px}
 .upload-check input{accent-color:var(--purple);width:16px;height:16px}
-.upload-dropzone{border:2px dashed #C5C0F0;border-radius:14px;padding:40px 20px;text-align:center;background:#FAFAFF;cursor:pointer;transition:all .2s;position:relative}
+.upload-dropzone{border:2px dashed #C5C0F0;border-radius:14px;padding:40px 20px;text-align:center;background:#FAFAFF;cursor:pointer;transition:all .3s;position:relative;overflow:hidden}
 .upload-dropzone:hover{border-color:var(--purple);background:#F4F2FF}
 .upload-dropzone-icon{width:52px;height:52px;margin:0 auto 14px;background:var(--purple-bg);border-radius:14px;display:flex;align-items:center;justify-content:center}
 .upload-dropzone-icon svg{width:24px;height:24px;stroke:var(--purple);fill:none;stroke-width:1.8}
@@ -179,17 +208,30 @@ html,body{background:#070E18;color:#EDF3F8;font-family:'Outfit',sans-serif;heigh
 .upload-dropzone-text a{color:var(--purple);font-weight:600;text-decoration:none}
 .upload-device{display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-size:12px;color:#888;background:#fff;border:1px solid #E5E5EF;padding:6px 14px;border-radius:8px}
 
+/* Floating file icons for upload hover */
+.upload-float-icon{position:absolute;pointer-events:none;opacity:0;font-size:22px;animation:floatFileDown 1.5s ease-in infinite;z-index:5}
+@keyframes floatFileDown{0%{opacity:0;transform:translateY(-30px) rotate(-10deg)}20%{opacity:.7}80%{opacity:.5}100%{opacity:0;transform:translateY(60px) rotate(10deg)}}
+
 /* ===== SCREEN 4 - PROCESSING ===== */
 .processing-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:50px 28px;text-align:center;min-height:340px}
-.processing-icon{width:100px;height:100px;margin-bottom:24px;position:relative}
-.processing-icon svg{width:100px;height:100px}
+.processing-icon{width:100px;height:100px;margin-bottom:24px;position:relative;overflow:hidden}
+.processing-icon svg{width:100px;height:100px;position:relative;z-index:1}
 .processing-spinner{position:absolute;inset:-8px;border:3px solid transparent;border-top:3px solid var(--purple);border-radius:50%;animation:spin 1.2s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
+/* Scan line */
+.scan-line{position:absolute;left:25px;right:25px;height:3px;background:linear-gradient(90deg,transparent,var(--purple),rgba(123,113,232,.8),var(--purple),transparent);border-radius:2px;box-shadow:0 0 12px rgba(91,79,214,.6),0 0 30px rgba(91,79,214,.3);z-index:3;animation:scanSweep 2s ease-in-out infinite;top:8px;opacity:0}
+.screen-4-active .scan-line{opacity:1}
+@keyframes scanSweep{0%{top:8px}50%{top:65px}100%{top:8px}}
+
+/* Text extraction particles */
+.text-extract{position:absolute;font-size:9px;font-family:monospace;color:var(--purple);opacity:0;pointer-events:none;white-space:nowrap;z-index:4}
+
 .processing-text{font-size:16px;color:#555;line-height:1.7;max-width:400px}
 
 /* ===== SCREEN 5 - REVIEW ===== */
 .review-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.review-card{background:#fff;border:1px solid #E5E5EF;border-radius:12px;padding:18px;transition:box-shadow .2s}
+.review-card{background:#fff;border:1px solid #E5E5EF;border-radius:12px;padding:18px;transition:all .4s cubic-bezier(.4,0,.2,1);opacity:0;transform:translateY(30px)}
+.review-card.card-visible{opacity:1;transform:translateY(0)}
 .review-card:hover{box-shadow:0 2px 12px rgba(0,0,0,.06)}
 .review-card-label{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--purple);margin-bottom:10px;display:flex;align-items:center;gap:6px}
 .review-card-label svg{width:14px;height:14px;stroke:var(--purple);fill:none;stroke-width:2}
@@ -200,7 +242,8 @@ html,body{background:#070E18;color:#EDF3F8;font-family:'Outfit',sans-serif;heigh
 .review-table td:first-child{color:#888;font-size:12px}
 .review-table td:last-child{text-align:right;font-weight:600;color:#1E1E2F}
 .review-table tr:last-child td{border-bottom:none}
-.review-actions{display:flex;gap:12px;margin-top:22px;justify-content:flex-end}
+.review-actions{display:flex;gap:12px;margin-top:22px;justify-content:flex-end;opacity:0;transform:translateY(20px);transition:all .4s cubic-bezier(.4,0,.2,1)}
+.review-actions.card-visible{opacity:1;transform:translateY(0)}
 .review-actions .wiz-btn-outlined{cursor:default}
 
 /* Success overlay */
@@ -212,10 +255,13 @@ html,body{background:#070E18;color:#EDF3F8;font-family:'Outfit',sans-serif;heigh
 .success-title{font-size:22px;font-weight:700;color:#1E1E2F;margin-bottom:6px}
 .success-sub{font-size:14px;color:#666;margin-bottom:20px}
 
+/* Confetti canvas */
+#confetti-canvas{position:absolute;inset:0;pointer-events:none;z-index:35}
+
 /* Step indicator (bottom bar inside mock browser) */
 .mock-footer{height:40px;background:#fff;border-top:1px solid #E5E5EF;display:flex;align-items:center;justify-content:center;gap:8px;flex-shrink:0}
 .mock-step-dot{width:8px;height:8px;border-radius:50%;background:#E0DDF0;transition:all .3s}
-.mock-step-dot.active{background:var(--purple);transform:scale(1.25)}
+.mock-step-dot.active{background:var(--purple);transform:scale(1.25);box-shadow:0 0 8px rgba(91,79,214,.4)}
 .mock-step-label{font-size:11px;color:#999;margin-left:8px;font-weight:500}
 </style>
 </head>
@@ -374,7 +420,7 @@ html,body{background:#070E18;color:#EDF3F8;font-family:'Outfit',sans-serif;heigh
       <div class="demo-viewer" id="demo-viewer">
         <!-- Interactive wizard demo -->
         <div class="mock-browser-wrap" id="demo-live" style="display:flex">
-          <div class="mock-browser">
+          <div class="mock-browser" id="mock-browser">
             <div class="mock-titlebar">
               <div class="mock-dot red"></div>
               <div class="mock-dot yellow"></div>
@@ -382,6 +428,7 @@ html,body{background:#070E18;color:#EDF3F8;font-family:'Outfit',sans-serif;heigh
               <div class="mock-titlebar-text">TotalBrokerage Wizard</div>
             </div>
             <div class="mock-body" id="mock-body">
+              <canvas id="micro-particles"></canvas>
 
               <!-- ========== SCREEN 1: DASHBOARD ========== -->
               <div class="wizard-screen active" id="screen-1">
@@ -403,9 +450,9 @@ html,body{background:#070E18;color:#EDF3F8;font-family:'Outfit',sans-serif;heigh
                       <svg viewBox="0 0 24 24" fill="none" stroke="#5B4FD6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
                     </div>
                     <div class="dash-card-title">Quick Start</div>
-                    <button class="wiz-btn-primary pulse-ring" onclick="goToScreen(2)" id="btn-start-tx" style="width:100%;justify-content:center;font-size:13px;padding:10px 16px">Start New Transaction</button>
+                    <button class="wiz-btn-primary pulse-ring" onclick="goToScreen(2)" id="btn-start-tx" data-clickable="1" style="width:100%;justify-content:center;font-size:13px;padding:10px 16px">Start New Transaction</button>
                     <!-- Tooltip -->
-                    <div class="wiz-tooltip arrow-top" style="position:absolute;bottom:-58px;left:50%;transform:translateX(-50%);white-space:nowrap">To start off, click on "Start New Transaction".</div>
+                    <div class="wiz-tooltip arrow-top" style="position:absolute;bottom:-58px;left:50%;transform:translateX(-50%);white-space:nowrap" data-tt="To start off, click on &quot;Start New Transaction&quot;."></div>
                   </div>
                   <!-- Card 2 -->
                   <div class="dash-card">
@@ -446,14 +493,14 @@ html,body{background:#070E18;color:#EDF3F8;font-family:'Outfit',sans-serif;heigh
                 <div class="wiz-subtext">Executed documents are PDFs that have already been signed.</div>
                 <div class="wiz-content">
                   <div class="doc-buttons" style="position:relative">
-                    <button class="wiz-btn-primary pulse-ring" onclick="goToScreen(3)" id="btn-executed">
+                    <button class="wiz-btn-primary pulse-ring" onclick="goToScreen(3)" id="btn-executed" data-clickable="2">
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
                       I have executed forms
                     </button>
                     <button class="wiz-btn-primary" style="opacity:.65;cursor:default">I need blank forms</button>
                     <button class="wiz-btn-primary" style="opacity:.65;cursor:default">I do not need forms</button>
                     <!-- Tooltip -->
-                    <div class="wiz-tooltip arrow-top" style="position:absolute;top:58px;left:110px;transform:translateX(-50%)">Click "I have executed forms".</div>
+                    <div class="wiz-tooltip arrow-top" style="position:absolute;top:58px;left:110px;transform:translateX(-50%)" data-tt="Click &quot;I have executed forms&quot;."></div>
                   </div>
                   <div class="doc-info-box">
                     <div class="info-icon">&#9889;</div>
@@ -488,7 +535,7 @@ html,body{background:#070E18;color:#EDF3F8;font-family:'Outfit',sans-serif;heigh
                     <input type="checkbox" checked disabled>
                     <span>I have read, understand, and agree to the terms and conditions stated above.</span>
                   </div>
-                  <div class="upload-dropzone pulse-ring" onclick="goToScreen(4)" id="upload-zone">
+                  <div class="upload-dropzone pulse-ring" onclick="goToScreen(4)" id="upload-zone" data-clickable="3">
                     <div class="upload-dropzone-icon">
                       <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
                     </div>
@@ -499,7 +546,7 @@ html,body{background:#070E18;color:#EDF3F8;font-family:'Outfit',sans-serif;heigh
                     </div>
                   </div>
                   <!-- Tooltip -->
-                  <div class="wiz-tooltip arrow-bottom" style="position:absolute;top:10px;right:30px">Drag and drop your executed contracts.</div>
+                  <div class="wiz-tooltip arrow-bottom" style="position:absolute;top:10px;right:30px" data-tt="Drag and drop your executed contracts."></div>
                 </div>
               </div>
 
@@ -512,8 +559,8 @@ html,body{background:#070E18;color:#EDF3F8;font-family:'Outfit',sans-serif;heigh
                 </div>
                 <div class="wiz-progress-bar"><div class="wiz-progress-fill" style="width:40%"></div></div>
                 <div class="wiz-section-header">Upload Executed Documents</div>
-                <div class="processing-wrap" onclick="goToScreen(5)" style="cursor:pointer;position:relative" id="processing-area">
-                  <div class="processing-icon">
+                <div class="processing-wrap" onclick="goToScreen(5)" style="cursor:pointer;position:relative" id="processing-area" data-clickable="4">
+                  <div class="processing-icon" id="processing-icon-wrap">
                     <svg viewBox="0 0 100 100" fill="none">
                       <rect x="25" y="8" width="50" height="65" rx="6" stroke="#5B4FD6" stroke-width="2.5" fill="#F0EEFF"/>
                       <rect x="25" y="8" width="50" height="18" rx="6" fill="#5B4FD6"/>
@@ -527,13 +574,14 @@ html,body{background:#070E18;color:#EDF3F8;font-family:'Outfit',sans-serif;heigh
                       <path d="M62 68 L66 72 L74 64" stroke="#5B4FD6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
                     </svg>
                     <div class="processing-spinner"></div>
+                    <div class="scan-line"></div>
                   </div>
                   <div class="processing-text">
                     We're reading your documents to pre-fill your transaction.<br>
                     <strong>You'll be able to continue shortly.</strong>
                   </div>
                   <!-- Tooltip -->
-                  <div class="wiz-tooltip arrow-top" style="position:relative;margin-top:24px">TotalBrokerage pulls data straight from the docs, no typing required.</div>
+                  <div class="wiz-tooltip arrow-top" style="position:relative;margin-top:24px" data-tt="TotalBrokerage pulls data straight from the docs, no typing required."></div>
                 </div>
               </div>
 
@@ -551,70 +599,71 @@ html,body{background:#070E18;color:#EDF3F8;font-family:'Outfit',sans-serif;heigh
                 <div class="wiz-content" style="position:relative">
                   <div class="review-cards">
                     <!-- Property -->
-                    <div class="review-card">
+                    <div class="review-card" data-card-index="0">
                       <div class="review-card-label">
                         <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
                         Property Information
                       </div>
-                      <div class="review-card-value">
-                        123 Maple Street<br>
-                        Anytown, PA 17101<br>
-                        United States<br><br>
+                      <div class="review-card-value" data-typein>
+                        <span data-typein-text>123 Maple Street</span><br>
+                        <span data-typein-text>Anytown, PA 17101</span><br>
+                        <span data-typein-text>United States</span><br><br>
                         <span class="label">Legal Description:</span><br>
-                        ORANGE LOT 55
+                        <span data-typein-text>ORANGE LOT 55</span>
                       </div>
                     </div>
                     <!-- Financial -->
-                    <div class="review-card">
+                    <div class="review-card" data-card-index="1">
                       <div class="review-card-label">
                         <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
                         Financial Information
                       </div>
                       <div class="review-card-value">
                         <table class="review-table">
-                          <tr><td>Balance To Close</td><td>$12,500,000.00</td></tr>
-                          <tr><td>Initial Deposit</td><td>$500,000.00</td></tr>
-                          <tr><td>Sale Price</td><td>$15,000,000.00</td></tr>
+                          <tr><td>Balance To Close</td><td data-countup="12500000">$0.00</td></tr>
+                          <tr><td>Initial Deposit</td><td data-countup="500000">$0.00</td></tr>
+                          <tr><td>Sale Price</td><td data-countup="15000000">$0.00</td></tr>
                         </table>
                       </div>
                     </div>
                     <!-- Date -->
-                    <div class="review-card">
+                    <div class="review-card" data-card-index="2">
                       <div class="review-card-label">
                         <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                         Date Information
                       </div>
                       <div class="review-card-value">
                         <table class="review-table">
-                          <tr><td>Closing Date</td><td>07/01/2025</td></tr>
+                          <tr><td>Closing Date</td><td><span data-typein-text>07/01/2025</span></td></tr>
                         </table>
                       </div>
                     </div>
                     <!-- Contacts -->
-                    <div class="review-card">
+                    <div class="review-card" data-card-index="3">
                       <div class="review-card-label">
                         <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                         Contact Information
                       </div>
                       <div class="review-card-value">
                         <span class="label">Buyers:</span><br>
-                        Jeff Bezos<br><br>
+                        <span data-typein-text>Jeff Bezos</span><br><br>
                         <span class="label">Sellers:</span><br>
-                        David Hathaway
+                        <span data-typein-text>David Hathaway</span>
                       </div>
                     </div>
                   </div>
-                  <div class="review-actions">
+                  <div class="review-actions" data-card-index="4">
                     <button class="wiz-btn-outlined">Edit Information</button>
-                    <button class="wiz-btn-primary pulse-ring" onclick="showSuccess()" id="btn-confirm">Confirm and Create Transaction</button>
+                    <button class="wiz-btn-primary pulse-ring" onclick="showSuccess()" id="btn-confirm" data-clickable="5">Confirm and Create Transaction</button>
                   </div>
                   <!-- Tooltip -->
-                  <div class="wiz-tooltip arrow-bottom" style="position:absolute;top:-8px;right:28px">Confirm the information is correct and you're done!</div>
+                  <div class="wiz-tooltip arrow-bottom" style="position:absolute;top:-8px;right:28px" data-tt="Confirm the information is correct and you're done!"></div>
                 </div>
               </div>
 
               <!-- SUCCESS OVERLAY -->
               <div class="success-overlay" id="success-overlay">
+                <canvas id="confetti-canvas"></canvas>
                 <div class="success-check">
                   <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
                 </div>
@@ -624,6 +673,11 @@ html,body{background:#070E18;color:#EDF3F8;font-family:'Outfit',sans-serif;heigh
               </div>
 
             </div><!-- /mock-body -->
+            <!-- Fake cursor -->
+            <div id="fake-cursor">
+              <div class="cursor-dot"></div>
+              <div class="cursor-trail"></div>
+            </div>
             <div class="mock-footer">
               <div class="mock-step-dot active" data-step="1"></div>
               <div class="mock-step-dot" data-step="2"></div>
@@ -651,6 +705,9 @@ html,body{background:#070E18;color:#EDF3F8;font-family:'Outfit',sans-serif;heigh
 </div>
 
 <script>
+// ========================================
+// CORE STATE & CONFIG
+// ========================================
 const DEMOS = {
   tx: { name: "Transaction Management", live: true },
   compliance: { name: "Compliance", live: false },
@@ -666,7 +723,442 @@ const DEMOS = {
 
 let currentScreen = 1;
 let autoAdvanceTimer = null;
+let fakeCursorActive = true;
+let fakeCursorAnim = null;
+let uploadFloatInterval = null;
+let textExtractInterval = null;
+let particleCtx = null;
+let particles = [];
+let particleAnimFrame = null;
 
+// ========================================
+// 1. ANIMATED CURSOR GUIDE
+// ========================================
+const fakeCursor = document.getElementById('fake-cursor');
+const mockBrowser = document.getElementById('mock-browser');
+
+const CLICKABLE_TARGETS = {
+  1: 'btn-start-tx',
+  2: 'btn-executed',
+  3: 'upload-zone',
+  4: 'processing-area',
+  5: 'btn-confirm'
+};
+
+function animateFakeCursor(screenNum) {
+  if (!fakeCursorActive) return;
+  const targetId = CLICKABLE_TARGETS[screenNum];
+  if (!targetId) return;
+  const target = document.getElementById(targetId);
+  if (!target) return;
+
+  fakeCursor.style.opacity = '0';
+
+  // Wait for screen transition
+  if (fakeCursorAnim) cancelAnimationFrame(fakeCursorAnim);
+
+  setTimeout(() => {
+    if (!fakeCursorActive) return;
+    const browserRect = mockBrowser.getBoundingClientRect();
+    const targetRect = target.getBoundingClientRect();
+
+    // Start from center of mock browser
+    const startX = browserRect.width / 2;
+    const startY = browserRect.height / 2;
+    // End at center of target
+    const endX = targetRect.left - browserRect.left + targetRect.width / 2 - 9;
+    const endY = targetRect.top - browserRect.top + targetRect.height / 2 - 9;
+
+    let progress = 0;
+    fakeCursor.style.opacity = '1';
+    fakeCursor.style.transform = `translate(${startX}px, ${startY}px)`;
+
+    function step() {
+      if (!fakeCursorActive) { fakeCursor.style.opacity = '0'; return; }
+      progress += 0.018;
+      if (progress >= 1) {
+        // Bounce effect
+        const bounce = Math.sin(progress * Math.PI) * 3 * Math.max(0, 2 - progress * 2);
+        const x = endX;
+        const y = endY - bounce;
+        fakeCursor.style.transform = `translate(${x}px, ${y}px)`;
+        if (progress >= 1.3) return; // stop
+        fakeCursorAnim = requestAnimationFrame(step);
+        return;
+      }
+      // Ease out cubic
+      const t = 1 - Math.pow(1 - progress, 3);
+      const x = startX + (endX - startX) * t;
+      const y = startY + (endY - startY) * t;
+      fakeCursor.style.transform = `translate(${x}px, ${y}px)`;
+      fakeCursorAnim = requestAnimationFrame(step);
+    }
+    fakeCursorAnim = requestAnimationFrame(step);
+  }, 700);
+}
+
+function hideFakeCursor() {
+  fakeCursor.style.opacity = '0';
+  if (fakeCursorAnim) cancelAnimationFrame(fakeCursorAnim);
+}
+
+// ========================================
+// 2. CLICK RIPPLE EFFECTS
+// ========================================
+document.addEventListener('click', function(e) {
+  // Only inside mock browser
+  if (!e.target.closest('.mock-body') && !e.target.closest('.mock-footer')) return;
+  spawnRipple(e.clientX, e.clientY);
+});
+
+function spawnRipple(x, y) {
+  const r1 = document.createElement('div');
+  r1.className = 'click-ripple';
+  r1.style.left = x + 'px';
+  r1.style.top = y + 'px';
+  document.body.appendChild(r1);
+
+  const r2 = document.createElement('div');
+  r2.className = 'click-ripple-inner';
+  r2.style.left = x + 'px';
+  r2.style.top = y + 'px';
+  document.body.appendChild(r2);
+
+  setTimeout(() => { r1.remove(); r2.remove(); }, 700);
+}
+
+// ========================================
+// 3. CONFETTI EXPLOSION
+// ========================================
+const confettiCanvas = document.getElementById('confetti-canvas');
+const confettiCtx = confettiCanvas.getContext('2d');
+let confettiParticles = [];
+let confettiAnim = null;
+
+function launchConfetti() {
+  const rect = confettiCanvas.parentElement.getBoundingClientRect();
+  confettiCanvas.width = rect.width;
+  confettiCanvas.height = rect.height;
+
+  const colors = ['#5B4FD6', '#E8863A', '#22C55E', '#FFD700', '#7B71E8', '#FF6B6B', '#4ECDC4'];
+  confettiParticles = [];
+
+  for (let i = 0; i < 120; i++) {
+    confettiParticles.push({
+      x: rect.width / 2 + (Math.random() - 0.5) * 60,
+      y: rect.height / 2,
+      vx: (Math.random() - 0.5) * 14,
+      vy: -Math.random() * 12 - 4,
+      w: Math.random() * 8 + 4,
+      h: Math.random() * 6 + 3,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      rotation: Math.random() * 360,
+      rotSpeed: (Math.random() - 0.5) * 12,
+      gravity: 0.18 + Math.random() * 0.08,
+      opacity: 1,
+      decay: 0.003 + Math.random() * 0.004
+    });
+  }
+
+  if (confettiAnim) cancelAnimationFrame(confettiAnim);
+  function renderConfetti() {
+    confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+    let alive = false;
+    for (const p of confettiParticles) {
+      if (p.opacity <= 0) continue;
+      alive = true;
+      p.x += p.vx;
+      p.vy += p.gravity;
+      p.y += p.vy;
+      p.vx *= 0.99;
+      p.rotation += p.rotSpeed;
+      p.opacity -= p.decay;
+      if (p.opacity < 0) p.opacity = 0;
+
+      confettiCtx.save();
+      confettiCtx.translate(p.x, p.y);
+      confettiCtx.rotate(p.rotation * Math.PI / 180);
+      confettiCtx.globalAlpha = p.opacity;
+      confettiCtx.fillStyle = p.color;
+      confettiCtx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      confettiCtx.restore();
+    }
+    if (alive) confettiAnim = requestAnimationFrame(renderConfetti);
+  }
+  confettiAnim = requestAnimationFrame(renderConfetti);
+}
+
+// ========================================
+// 4. TYPEWRITER EFFECT ON TOOLTIPS
+// ========================================
+function typewriterTooltips(screen) {
+  const tooltips = screen.querySelectorAll('.wiz-tooltip[data-tt]');
+  tooltips.forEach(tt => {
+    const fullText = tt.getAttribute('data-tt');
+    tt.innerHTML = '<span class="tt-text"></span><span class="tt-cursor"></span>';
+    const textEl = tt.querySelector('.tt-text');
+    let i = 0;
+    const typingDelay = 800; // wait for tooltip fade-in
+    setTimeout(() => {
+      function typeChar() {
+        if (i < fullText.length) {
+          textEl.textContent += fullText[i];
+          i++;
+          setTimeout(typeChar, 25 + Math.random() * 20);
+        }
+      }
+      typeChar();
+    }, typingDelay);
+  });
+}
+
+// ========================================
+// 5. 3D PERSPECTIVE TILT ON MOCK BROWSER
+// ========================================
+const mockBrowserWrap = document.getElementById('demo-live');
+mockBrowserWrap.addEventListener('mousemove', function(e) {
+  const rect = mockBrowser.getBoundingClientRect();
+  const cx = rect.left + rect.width / 2;
+  const cy = rect.top + rect.height / 2;
+  const dx = (e.clientX - cx) / (rect.width / 2);
+  const dy = (e.clientY - cy) / (rect.height / 2);
+  const rotY = dx * 2; // max 2 degrees
+  const rotX = -dy * 2;
+  mockBrowser.style.transform = `perspective(1200px) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+  mockBrowser.style.boxShadow = `0 12px 60px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.1), 0 0 80px rgba(91,79,214,.08), ${-dx*8}px ${-dy*8}px 40px rgba(91,79,214,.06), inset 0 1px 0 rgba(255,255,255,.15)`;
+});
+mockBrowserWrap.addEventListener('mouseleave', function() {
+  mockBrowser.style.transform = '';
+  mockBrowser.style.boxShadow = '';
+});
+
+// ========================================
+// 6. SCAN LINE + TEXT EXTRACTION (Screen 4)
+// ========================================
+const textSnippets = ['$12,500,000', 'Jeff Bezos', '123 Maple St', '07/01/2025', 'PA 17101', 'David Hathaway', 'ORANGE LOT 55', '$500,000'];
+
+function startTextExtraction() {
+  const wrap = document.getElementById('processing-icon-wrap');
+  if (!wrap) return;
+  // Add scan line activation
+  document.getElementById('screen-4').classList.add('screen-4-active');
+
+  let idx = 0;
+  textExtractInterval = setInterval(() => {
+    if (idx >= textSnippets.length * 2) { clearInterval(textExtractInterval); return; }
+    const snippet = textSnippets[idx % textSnippets.length];
+    const el = document.createElement('div');
+    el.className = 'text-extract';
+    el.textContent = snippet;
+    el.style.left = (30 + Math.random() * 40) + 'px';
+    el.style.top = (20 + Math.random() * 50) + 'px';
+
+    // Animate: fly out from doc to the right
+    wrap.appendChild(el);
+    let progress = 0;
+    const startX = parseFloat(el.style.left);
+    const startY = parseFloat(el.style.top);
+    const endX = 120 + Math.random() * 40;
+    const endY = startY - 20 + Math.random() * 40;
+
+    function animSnippet() {
+      progress += 0.03;
+      const t = Math.min(progress, 1);
+      const ease = 1 - Math.pow(1 - t, 3);
+      el.style.left = (startX + (endX - startX) * ease) + 'px';
+      el.style.top = (startY + (endY - startY) * ease) + 'px';
+      el.style.opacity = t < 0.5 ? t * 2 : Math.max(0, 2 - t * 2);
+      if (progress < 1.2) requestAnimationFrame(animSnippet);
+      else el.remove();
+    }
+    requestAnimationFrame(animSnippet);
+    idx++;
+  }, 300);
+}
+
+function stopTextExtraction() {
+  if (textExtractInterval) clearInterval(textExtractInterval);
+  const s4 = document.getElementById('screen-4');
+  if (s4) s4.classList.remove('screen-4-active');
+}
+
+// ========================================
+// 7. COUNTING NUMBERS + STAGGER CARDS (Screen 5)
+// ========================================
+function animateScreen5() {
+  // Stagger cards
+  const cards = document.querySelectorAll('#screen-5 .review-card');
+  cards.forEach((card, i) => {
+    card.classList.remove('card-visible');
+    setTimeout(() => card.classList.add('card-visible'), 200 + i * 150);
+  });
+  const actions = document.querySelector('#screen-5 .review-actions');
+  actions.classList.remove('card-visible');
+  setTimeout(() => actions.classList.add('card-visible'), 200 + cards.length * 150);
+
+  // Count up numbers
+  setTimeout(() => {
+    document.querySelectorAll('#screen-5 [data-countup]').forEach(el => {
+      const target = parseInt(el.getAttribute('data-countup'));
+      const duration = 1200;
+      const start = performance.now();
+      function countStep(now) {
+        const elapsed = now - start;
+        const t = Math.min(elapsed / duration, 1);
+        // ease out
+        const ease = 1 - Math.pow(1 - t, 3);
+        const val = Math.round(target * ease);
+        el.textContent = '$' + val.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        if (t < 1) requestAnimationFrame(countStep);
+      }
+      requestAnimationFrame(countStep);
+    });
+  }, 500);
+
+  // Type in text
+  setTimeout(() => {
+    document.querySelectorAll('#screen-5 [data-typein-text]').forEach((el, i) => {
+      const full = el.textContent;
+      el.textContent = '';
+      setTimeout(() => {
+        let ci = 0;
+        function typeStep() {
+          if (ci < full.length) {
+            el.textContent += full[ci];
+            ci++;
+            setTimeout(typeStep, 18 + Math.random() * 12);
+          }
+        }
+        typeStep();
+      }, i * 80);
+    });
+  }, 400);
+}
+
+function resetScreen5() {
+  document.querySelectorAll('#screen-5 .review-card').forEach(c => c.classList.remove('card-visible'));
+  document.querySelector('#screen-5 .review-actions').classList.remove('card-visible');
+  document.querySelectorAll('#screen-5 [data-countup]').forEach(el => { el.textContent = '$0.00'; });
+  document.querySelectorAll('#screen-5 [data-typein-text]').forEach(el => {
+    // Store original text as attribute if not stored
+    if (!el.hasAttribute('data-original')) el.setAttribute('data-original', el.textContent);
+  });
+}
+
+// Store originals on load
+document.querySelectorAll('#screen-5 [data-typein-text]').forEach(el => {
+  el.setAttribute('data-original', el.textContent);
+});
+
+// ========================================
+// 8. (Screen transitions handled via CSS .exit-zoom class)
+// ========================================
+
+// ========================================
+// 10. FLOATING MICRO-PARTICLES
+// ========================================
+function initMicroParticles() {
+  const canvas = document.getElementById('micro-particles');
+  const body = document.getElementById('mock-body');
+  if (!canvas || !body) return;
+
+  function resize() {
+    canvas.width = body.offsetWidth;
+    canvas.height = body.offsetHeight;
+  }
+  resize();
+  particleCtx = canvas.getContext('2d');
+
+  // Create particles
+  particles = [];
+  for (let i = 0; i < 35; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 1.5 + 0.5,
+      vy: -(Math.random() * 0.3 + 0.1),
+      vx: (Math.random() - 0.5) * 0.15,
+      opacity: Math.random() * 0.25 + 0.05
+    });
+  }
+
+  function animParticles() {
+    if (!particleCtx) return;
+    particleCtx.clearRect(0, 0, canvas.width, canvas.height);
+    for (const p of particles) {
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.y < -5) { p.y = canvas.height + 5; p.x = Math.random() * canvas.width; }
+      if (p.x < -5) p.x = canvas.width + 5;
+      if (p.x > canvas.width + 5) p.x = -5;
+
+      particleCtx.beginPath();
+      particleCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      particleCtx.fillStyle = `rgba(91,79,214,${p.opacity})`;
+      particleCtx.fill();
+    }
+    particleAnimFrame = requestAnimationFrame(animParticles);
+  }
+  particleAnimFrame = requestAnimationFrame(animParticles);
+
+  // Resize observer
+  new ResizeObserver(resize).observe(body);
+}
+
+// ========================================
+// 11. UPLOAD DROPZONE HOVER FILE ICONS
+// ========================================
+const uploadZone = document.getElementById('upload-zone');
+const fileEmojis = ['\uD83D\uDCC4', '\uD83D\uDCC3', '\uD83D\uDCCB', '\uD83D\uDCC2', '\uD83D\uDCC1'];
+
+if (uploadZone) {
+  uploadZone.addEventListener('mouseenter', function() {
+    if (uploadFloatInterval) return;
+    uploadFloatInterval = setInterval(() => {
+      const icon = document.createElement('div');
+      icon.className = 'upload-float-icon';
+      icon.textContent = fileEmojis[Math.floor(Math.random() * fileEmojis.length)];
+      icon.style.left = (15 + Math.random() * 70) + '%';
+      icon.style.top = '10%';
+      icon.style.animationDelay = Math.random() * 0.3 + 's';
+      icon.style.animationDuration = (1 + Math.random() * 0.8) + 's';
+      uploadZone.appendChild(icon);
+      setTimeout(() => icon.remove(), 2000);
+    }, 250);
+  });
+  uploadZone.addEventListener('mouseleave', function() {
+    if (uploadFloatInterval) { clearInterval(uploadFloatInterval); uploadFloatInterval = null; }
+  });
+}
+
+// ========================================
+// 12. MAGNETIC BUTTON HOVER
+// ========================================
+function initMagneticButtons() {
+  const interactiveButtons = document.querySelectorAll('[data-clickable]');
+  interactiveButtons.forEach(btn => {
+    btn.addEventListener('mousemove', function(e) {
+      const rect = btn.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = e.clientX - cx;
+      const dy = e.clientY - cy;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      const maxDist = 80;
+      if (dist < maxDist) {
+        const pull = (1 - dist / maxDist) * 4;
+        btn.style.transform = `translate(${dx * pull / maxDist}px, ${dy * pull / maxDist}px) scale(${1 + (1 - dist / maxDist) * 0.04})`;
+      }
+    });
+    btn.addEventListener('mouseleave', function() {
+      btn.style.transform = '';
+    });
+  });
+}
+
+// ========================================
+// CORE NAVIGATION
+// ========================================
 function selectFeature(btn) {
   document.querySelectorAll(".feature-btn").forEach(b => b.classList.remove("active"));
   btn.classList.add("active");
@@ -690,26 +1182,39 @@ function selectFeature(btn) {
 
 function goToScreen(num) {
   if (autoAdvanceTimer) { clearTimeout(autoAdvanceTimer); autoAdvanceTimer = null; }
+  hideFakeCursor();
+  stopTextExtraction();
 
   const prev = document.getElementById("screen-" + currentScreen);
   const next = document.getElementById("screen-" + num);
   if (!prev || !next) return;
 
-  // Remove any existing tooltips' animation so they re-trigger
+  // Zoom/blur exit transition
   prev.classList.remove("active");
-  prev.classList.add("exit-left");
+  prev.classList.add("exit-zoom");
 
   setTimeout(() => {
-    prev.classList.remove("exit-left");
+    prev.classList.remove("exit-zoom");
     next.classList.add("active");
     currentScreen = num;
     updateStepDots();
 
-    // Auto-advance for screen 4 (processing)
+    // Typewriter tooltips
+    typewriterTooltips(next);
+
+    // Animate fake cursor for new screen
+    fakeCursorActive = true;
+    animateFakeCursor(num);
+
+    // Screen-specific animations
     if (num === 4) {
-      autoAdvanceTimer = setTimeout(() => goToScreen(5), 3000);
+      startTextExtraction();
+      autoAdvanceTimer = setTimeout(() => goToScreen(5), 3500);
     }
-  }, 350);
+    if (num === 5) {
+      animateScreen5();
+    }
+  }, 400);
 }
 
 function updateStepDots() {
@@ -721,28 +1226,56 @@ function updateStepDots() {
 }
 
 function showSuccess() {
+  hideFakeCursor();
   const overlay = document.getElementById("success-overlay");
   overlay.classList.add("show");
+  // Confetti
+  setTimeout(launchConfetti, 200);
 }
 
 function resetWizard() {
   if (autoAdvanceTimer) { clearTimeout(autoAdvanceTimer); autoAdvanceTimer = null; }
+  stopTextExtraction();
+  hideFakeCursor();
 
   const overlay = document.getElementById("success-overlay");
   overlay.classList.remove("show");
+  confettiParticles = [];
+  if (confettiAnim) cancelAnimationFrame(confettiAnim);
+  confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+
+  // Reset screen 5 cards
+  resetScreen5();
+
+  // Restore typein text
+  document.querySelectorAll('[data-typein-text][data-original]').forEach(el => {
+    el.textContent = el.getAttribute('data-original');
+  });
 
   // Hide all screens
   document.querySelectorAll(".wizard-screen").forEach(s => {
-    s.classList.remove("active", "exit-left");
+    s.classList.remove("active", "exit-zoom", "screen-4-active");
   });
 
   // Show screen 1
   currentScreen = 1;
   setTimeout(() => {
-    document.getElementById("screen-1").classList.add("active");
+    const s1 = document.getElementById("screen-1");
+    s1.classList.add("active");
     updateStepDots();
+    typewriterTooltips(s1);
+    fakeCursorActive = true;
+    animateFakeCursor(1);
   }, 100);
 }
+
+// Hide fake cursor when user clicks any interactive target
+document.querySelectorAll('[data-clickable]').forEach(el => {
+  el.addEventListener('click', () => {
+    fakeCursorActive = false;
+    hideFakeCursor();
+  });
+});
 
 // Keyboard support
 document.addEventListener("keydown", (e) => {
@@ -755,8 +1288,19 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-// Init
+// ========================================
+// INIT
+// ========================================
 updateStepDots();
+initMicroParticles();
+initMagneticButtons();
+
+// Initial typewriter + cursor
+setTimeout(() => {
+  typewriterTooltips(document.getElementById('screen-1'));
+  fakeCursorActive = true;
+  animateFakeCursor(1);
+}, 300);
 </script>
 
 <div id="pb" style="position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(27,77,104,.95);color:#EDF3F8;padding:10px 24px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(12px);font-size:12px;font-weight:500;border-top:1px solid rgba(43,123,174,.3)">
