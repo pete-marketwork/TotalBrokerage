@@ -78,9 +78,31 @@ html,body{background:#070E18;color:#EDF3F8;font-family:'Outfit',sans-serif;heigh
 .demo-fullscreen{padding:5px 12px;background:rgba(255,255,255,.04);border:1px solid var(--bd);border-radius:6px;font-size:12px;color:rgba(237,243,248,.45);cursor:pointer;transition:all .2s;font-family:'Outfit',sans-serif}
 .demo-fullscreen:hover{background:rgba(255,255,255,.08);color:var(--wh)}
 
-/* iframe container */
-.iframe-wrap{flex:1;position:relative;overflow:hidden;background:#070E18}
-.iframe-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+/* Demo viewer */
+.demo-viewer{flex:1;position:relative;overflow:hidden;background:#070E18;display:flex;flex-direction:column}
+.demo-screen{flex:1;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:20px}
+.demo-screen img{max-width:100%;max-height:100%;object-fit:contain;border-radius:10px;box-shadow:0 8px 40px rgba(0,0,0,.5);transition:opacity .35s ease}
+.demo-screen img.fade{opacity:0}
+
+/* Tooltip overlay */
+.demo-tooltip{position:absolute;bottom:100px;left:50%;transform:translateX(-50%);background:var(--or);color:#fff;padding:14px 22px;border-radius:14px;font-size:14px;font-weight:500;line-height:1.5;max-width:380px;text-align:center;box-shadow:0 6px 24px rgba(245,117,28,.35);animation:tooltipIn .4s ease .2s both}
+@keyframes tooltipIn{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+
+/* Step counter */
+.demo-step-label{font-size:12px;color:rgba(237,243,248,.4);font-weight:500}
+
+/* Controls bar */
+.demo-controls{display:flex;align-items:center;justify-content:center;gap:16px;padding:16px 24px;border-top:1px solid var(--bd);background:rgba(10,18,30,.5);flex-shrink:0}
+.demo-nav-btn{width:38px;height:38px;border-radius:50%;border:1px solid var(--bd);background:rgba(255,255,255,.04);color:rgba(237,243,248,.5);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;font-family:'Outfit',sans-serif}
+.demo-nav-btn:hover:not(:disabled){background:rgba(255,255,255,.1);color:var(--wh);border-color:rgba(255,255,255,.15)}
+.demo-nav-btn:disabled{opacity:.25;cursor:default}
+.demo-nav-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* Progress dots */
+.demo-dots{display:flex;gap:8px;align-items:center}
+.demo-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.12);transition:all .25s;cursor:pointer}
+.demo-dot.active{background:var(--or);box-shadow:0 0 8px rgba(245,117,28,.4);transform:scale(1.2)}
+.demo-dot:hover:not(.active){background:rgba(255,255,255,.25)}
 
 /* Coming soon state */
 .coming-soon{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px}
@@ -90,19 +112,6 @@ html,body{background:#070E18;color:#EDF3F8;font-family:'Outfit',sans-serif;heigh
 .cs-sub{font-size:14px;color:rgba(237,243,248,.38);max-width:320px;text-align:center;line-height:1.7}
 .cs-cta{padding:10px 24px;background:var(--or);color:#fff;border-radius:100px;font-size:14px;font-weight:600;text-decoration:none;margin-top:4px;display:inline-block;transition:all .2s}
 .cs-cta:hover{opacity:.88}
-
-/* Loading state */
-.iframe-loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#070E18;pointer-events:none;transition:opacity .4s}
-.loading-inner{display:flex;flex-direction:column;align-items:center;gap:14px}
-.loading-dots{display:flex;gap:7px}
-.loading-dot{width:7px;height:7px;border-radius:50%;background:var(--or);animation:ldot 1.4s ease-in-out infinite}
-.loading-dot:nth-child(2){animation-delay:.2s}
-.loading-dot:nth-child(3){animation-delay:.4s}
-@keyframes ldot{0%,80%,100%{opacity:.2;transform:scale(.8)}40%{opacity:1;transform:scale(1)}}
-.loading-label{font-size:13px;color:rgba(237,243,248,.3)}
-
-@keyframes pdot{0%,100%{opacity:1}50%{opacity:.3}}
-.pulse{animation:pdot 2s ease-in-out infinite}
 </style>
 </head>
 <body>
@@ -152,7 +161,7 @@ html,body{background:#070E18;color:#EDF3F8;font-family:'Outfit',sans-serif;heigh
           <div class="feat-name">Compliance</div>
           <div class="feat-desc">Automated checklists</div>
         </div>
-        <span class="live-badge">Live</span>
+        <span class="soon-badge">Soon</span>
       </button>
 
       <button class="feature-btn" data-id="commissions" onclick="selectFeature(this)">
@@ -163,7 +172,7 @@ html,body{background:#070E18;color:#EDF3F8;font-family:'Outfit',sans-serif;heigh
           <div class="feat-name">Commissions</div>
           <div class="feat-desc">Splits & payouts</div>
         </div>
-        <span class="live-badge">Live</span>
+        <span class="soon-badge">Soon</span>
       </button>
 
       <button class="feature-btn" data-id="reporting" onclick="selectFeature(this)">
@@ -174,7 +183,7 @@ html,body{background:#070E18;color:#EDF3F8;font-family:'Outfit',sans-serif;heigh
           <div class="feat-name">Reporting</div>
           <div class="feat-desc">Real-time dashboards</div>
         </div>
-        <span class="live-badge">Live</span>
+        <span class="soon-badge">Soon</span>
       </button>
 
       <div class="sidebar-label">Agent tools</div>
@@ -257,21 +266,22 @@ html,body{background:#070E18;color:#EDF3F8;font-family:'Outfit',sans-serif;heigh
         </div>
       </div>
 
-      <div class="iframe-wrap" id="iframe-wrap">
-        <!-- Loading indicator -->
-        <div class="iframe-loading" id="loading">
-          <div class="loading-inner">
-            <div class="loading-dots">
-              <div class="loading-dot"></div>
-              <div class="loading-dot"></div>
-              <div class="loading-dot"></div>
-            </div>
-            <div class="loading-label">Loading demo...</div>
-          </div>
+      <div class="demo-viewer" id="demo-viewer">
+        <!-- Live demo viewer -->
+        <div class="demo-screen" id="demo-screen">
+          <img id="demo-img" src="" alt="Demo step screenshot">
+          <div class="demo-tooltip" id="demo-tooltip"></div>
         </div>
-
-        <!-- Live demo iframe -->
-        <iframe id="demo-iframe" src="" title="TotalBrokerage interactive demo" allow="clipboard-write" allowfullscreen></iframe>
+        <div class="demo-controls" id="demo-controls">
+          <button class="demo-nav-btn" id="btn-prev" onclick="prevStep()">
+            <svg viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          </button>
+          <div class="demo-dots" id="demo-dots"></div>
+          <span class="demo-step-label" id="step-label"></span>
+          <button class="demo-nav-btn" id="btn-next" onclick="nextStep()">
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
 
         <!-- Coming soon overlay -->
         <div class="coming-soon" id="coming-soon" style="display:none">
@@ -290,10 +300,20 @@ html,body{background:#070E18;color:#EDF3F8;font-family:'Outfit',sans-serif;heigh
 
 <script>
 const DEMOS = {
-  tx: { id: "cmgjnryl31vgqkrn9u1", name: "Transaction Management", live: true },
-  compliance: { id: "cmgkzl8te314ukrn9ti", name: "Compliance", live: true },
-  commissions: { id: "cmgl0fcil08eoxu0hj2", name: "Commissions & Financials", live: true },
-  reporting: { id: "cmgpjgihq137w12sx35", name: "Reporting", live: true },
+  tx: {
+    name: "Transaction Management",
+    live: true,
+    steps: [
+      { img: "images/demo-tx/step-1.png", tooltip: "To start off, click on \"Start New Transaction\"." },
+      { img: "images/demo-tx/step-2.png", tooltip: "Click \"I have executed forms\" to use the automated document processor." },
+      { img: "images/demo-tx/step-3.png", tooltip: "Drag and drop your executed contracts." },
+      { img: "images/demo-tx/step-4.png", tooltip: "TotalBrokerage pulls data straight from the docs, no typing required." },
+      { img: "images/demo-tx/step-5.png", tooltip: "Confirm the information is correct and you're done!" }
+    ]
+  },
+  compliance: { name: "Compliance", live: false },
+  commissions: { name: "Commissions & Financials", live: false },
+  reporting: { name: "Reporting", live: false },
   "agent-mgmt": { name: "Agent Management", live: false },
   "agent-payouts": { name: "Agent Payouts", live: false },
   "agent-billing": { name: "Agent Billing", live: false },
@@ -303,54 +323,105 @@ const DEMOS = {
 };
 
 let currentId = "tx";
+let currentStep = 0;
 
 function selectFeature(btn) {
   document.querySelectorAll(".feature-btn").forEach(b => b.classList.remove("active"));
   btn.classList.add("active");
-  const id = btn.dataset.id;
-  currentId = id;
-  loadDemo(id);
+  currentId = btn.dataset.id;
+  currentStep = 0;
+  loadDemo(currentId);
 }
 
 function loadDemo(id) {
   const demo = DEMOS[id];
-  const iframe = document.getElementById("demo-iframe");
-  const loading = document.getElementById("loading");
+  const screen = document.getElementById("demo-screen");
+  const controls = document.getElementById("demo-controls");
   const comingSoon = document.getElementById("coming-soon");
   const breadcrumb = document.getElementById("breadcrumb-name");
 
   breadcrumb.textContent = demo.name;
 
-  if (demo.live) {
+  if (demo.live && demo.steps) {
     comingSoon.style.display = "none";
-    loading.style.opacity = "1";
-    loading.style.pointerEvents = "auto";
-    iframe.style.display = "block";
-
-    iframe.onload = () => {
-      loading.style.opacity = "0";
-      loading.style.pointerEvents = "none";
-    };
-
-    iframe.src = "https://app.supademo.com/embed/" + demo.id;
+    screen.style.display = "flex";
+    controls.style.display = "flex";
+    buildDots(demo.steps.length);
+    showStep(0);
   } else {
-    iframe.style.display = "none";
-    iframe.src = "";
-    loading.style.opacity = "0";
+    screen.style.display = "none";
+    controls.style.display = "none";
     comingSoon.style.display = "flex";
     document.getElementById("cs-sub").textContent =
       "An interactive walkthrough for " + demo.name + " is coming soon. Book a demo to see it live with our team.";
   }
 }
 
-function openFullscreen() {
-  const demo = DEMOS[currentId];
-  if (demo && demo.live) {
-    window.open("https://app.supademo.com/embed/" + demo.id, "_blank");
-  } else {
-    window.open("book-a-demo.html", "_self");
+function buildDots(count) {
+  const container = document.getElementById("demo-dots");
+  container.innerHTML = "";
+  for (let i = 0; i < count; i++) {
+    const dot = document.createElement("div");
+    dot.className = "demo-dot" + (i === 0 ? " active" : "");
+    dot.onclick = () => showStep(i);
+    container.appendChild(dot);
   }
 }
+
+function showStep(idx) {
+  const demo = DEMOS[currentId];
+  if (!demo.steps) return;
+  currentStep = idx;
+  const step = demo.steps[idx];
+
+  const img = document.getElementById("demo-img");
+  const tooltip = document.getElementById("demo-tooltip");
+
+  // Fade transition
+  img.classList.add("fade");
+  setTimeout(() => {
+    img.src = step.img;
+    img.onload = () => img.classList.remove("fade");
+  }, 150);
+
+  // Update tooltip
+  tooltip.style.animation = "none";
+  tooltip.offsetHeight; // reflow
+  tooltip.style.animation = "";
+  tooltip.textContent = step.tooltip;
+
+  // Update dots
+  document.querySelectorAll(".demo-dot").forEach((d, i) => {
+    d.classList.toggle("active", i === idx);
+  });
+
+  // Update label
+  document.getElementById("step-label").textContent = (idx + 1) + " / " + demo.steps.length;
+
+  // Update buttons
+  document.getElementById("btn-prev").disabled = idx === 0;
+  document.getElementById("btn-next").disabled = idx === demo.steps.length - 1;
+}
+
+function prevStep() {
+  if (currentStep > 0) showStep(currentStep - 1);
+}
+
+function nextStep() {
+  const demo = DEMOS[currentId];
+  if (demo.steps && currentStep < demo.steps.length - 1) showStep(currentStep + 1);
+}
+
+function openFullscreen() {
+  // No-op for now, or open book-a-demo
+  window.open("book-a-demo.html", "_self");
+}
+
+// Keyboard navigation
+document.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowRight" || e.key === "ArrowDown") nextStep();
+  if (e.key === "ArrowLeft" || e.key === "ArrowUp") prevStep();
+});
 
 // Load initial demo
 loadDemo("tx");
